@@ -16,11 +16,11 @@ class BasketResourceRequest extends AbstractResourceRequest
     }
 
     /**
-     * @return string
+     * @return BasketIdentifier
      */
     public function getBasketIdentifier()
     {
-        return $this->getUri()->getPathSegment(1);
+        return new BasketIdentifier($this->getUri()->getPathSegment(1));
     }
 
 }

@@ -8,14 +8,14 @@ use Kartenmacherei\RestFramework\Query;
 class GetBasketQuery implements Query
 {
     /**
-     * @var string
+     * @var BasketIdentifier
      */
-    private $basketIdentifier = '';
+    private $basketIdentifier;
 
     /**
-     * @param string $basketIdentifier
+     * @param BasketIdentifier $basketIdentifier
      */
-    public function __construct($basketIdentifier)
+    public function __construct(BasketIdentifier $basketIdentifier)
     {
         $this->basketIdentifier = $basketIdentifier;
     }
@@ -25,7 +25,7 @@ class GetBasketQuery implements Query
         return new ContentResponse(
             new JsonContent(
                 [
-                    'id' => $this->basketIdentifier,
+                    'id' => $this->basketIdentifier->asString(),
                     'items' => []
                 ]
             )

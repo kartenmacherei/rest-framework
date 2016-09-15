@@ -8,6 +8,7 @@ spl_autoload_register(
         if ($classes === null) {
             $classes = array(
                 'kartenmacherei\\basketservice\\application' => '/Application.php',
+                'kartenmacherei\\basketservice\\basketidentifier' => '/Domain/BasketIdentifier.php',
                 'kartenmacherei\\basketservice\\basketquerylocator' => '/RestResource/Basket/BasketQueryLocator.php',
                 'kartenmacherei\\basketservice\\basketresourcerequest' => '/RestResource/Basket/BasketResourceRequest.php',
                 'kartenmacherei\\basketservice\\basketrouter' => '/RestResource/Basket/BasketRouter.php',
