@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\RestResource;
 
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
+use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
 use Kartenmacherei\RestFramework\Router\Router;
 
 class WriteOnlyRestResource implements RestResource
@@ -29,7 +30,7 @@ class WriteOnlyRestResource implements RestResource
     /**
      * @return Router
      */
-    public function getRouter()
+    public function getRouter(): Router
     {
         return $this->router;
     }
@@ -37,7 +38,7 @@ class WriteOnlyRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasQueryLocator()
+    public function hasQueryLocator(): bool
     {
         return false;
     }
@@ -45,7 +46,7 @@ class WriteOnlyRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasCommandLocator()
+    public function hasCommandLocator(): bool
     {
         return true;
     }
@@ -53,7 +54,7 @@ class WriteOnlyRestResource implements RestResource
     /**
      * @throws RestResourceException
      */
-    public function getQueryLocator()
+    public function getQueryLocator(): QueryLocator
     {
         throw new RestResourceException('Resource is write-only');
     }
@@ -61,7 +62,7 @@ class WriteOnlyRestResource implements RestResource
     /**
      * @return CommandLocator
      */
-    public function getCommandLocator()
+    public function getCommandLocator(): CommandLocator
     {
         return $this->commandLocator;
     }

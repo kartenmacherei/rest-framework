@@ -6,5 +6,5 @@ interface ContentType
     /**
      * @return string
      */
-    public function asString();
+    public function asString(): string;
 }

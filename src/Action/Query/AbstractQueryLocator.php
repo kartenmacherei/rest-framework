@@ -16,7 +16,7 @@ abstract class AbstractQueryLocator implements QueryLocator
      * @return Query
      * @throws NoMoreLocatorsException
      */
-    public function getQuery(ResourceRequest $resourceRequest)
+    public function getQuery(ResourceRequest $resourceRequest): Query
     {
         if ($this->matches($resourceRequest)) {
             return $this->buildQuery($resourceRequest);
@@ -40,12 +40,12 @@ abstract class AbstractQueryLocator implements QueryLocator
      * @param ResourceRequest $resourceRequest
      * @return Query
      */
-    abstract protected function buildQuery(ResourceRequest $resourceRequest);
+    abstract protected function buildQuery(ResourceRequest $resourceRequest): Query;
 
     /**
      * @param ResourceRequest $resourceRequest
      * @return bool
      */
-    abstract protected function matches(ResourceRequest $resourceRequest);
+    abstract protected function matches(ResourceRequest $resourceRequest): bool;
 
 }

@@ -35,7 +35,7 @@ class CommandLocatorChain
      * @return Command
      * @throws NoMoreLocatorsException
      */
-    public function getCommand(ResourceRequest $resourceRequest)
+    public function getCommand(ResourceRequest $resourceRequest): Command
     {
         if (null === $this->first) {
             throw new NoMoreLocatorsException();

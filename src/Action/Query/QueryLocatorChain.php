@@ -35,7 +35,7 @@ class QueryLocatorChain
      * @return Query
      * @throws NoMoreLocatorsException
      */
-    public function getQuery(ResourceRequest $resourceRequest)
+    public function getQuery(ResourceRequest $resourceRequest): Query
     {
         if (null === $this->first) {
             throw new NoMoreLocatorsException();

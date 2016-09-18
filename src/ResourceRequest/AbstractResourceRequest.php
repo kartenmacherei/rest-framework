@@ -4,6 +4,7 @@ namespace Kartenmacherei\RestFramework\ResourceRequest;
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Uri;
 
 abstract class AbstractResourceRequest implements ResourceRequest
@@ -31,7 +32,7 @@ abstract class AbstractResourceRequest implements ResourceRequest
     /**
      * @return bool
      */
-    public function isReadRequest()
+    public function isReadRequest(): bool
     {
         return $this->requestMethod->equals(new GetRequestMethod());
     }
@@ -39,15 +40,15 @@ abstract class AbstractResourceRequest implements ResourceRequest
     /**
      * @return bool
      */
-    public function isOptionsRequest()
+    public function isOptionsRequest(): bool
     {
         return $this->requestMethod->equals(new OptionsRequestMethod());
     }
 
     /**
-     * @return AbstractRequestMethod
+     * @return RequestMethod
      */
-    public function getRequestMethod()
+    public function getRequestMethod(): RequestMethod
     {
         return $this->requestMethod;
     }
@@ -55,7 +56,7 @@ abstract class AbstractResourceRequest implements ResourceRequest
     /**
      * @return Uri
      */
-    protected function getUri()
+    protected function getUri(): Uri
     {
         return $this->uri;
     }

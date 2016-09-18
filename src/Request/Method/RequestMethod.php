@@ -7,10 +7,10 @@ interface RequestMethod
      * @param AbstractRequestMethod $requestMethod
      * @return bool
      */
-    public function equals(AbstractRequestMethod $requestMethod);
+    public function equals(AbstractRequestMethod $requestMethod): bool;
 
     /**
      * @return string
      */
-    public function asString();
+    public function asString(): string;
 }

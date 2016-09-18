@@ -36,7 +36,7 @@ class Framework
     /**
      * @return Framework
      */
-    public static function createInstance()
+    public static function createInstance(): Framework
     {
         $factory = new Factory();
         return new self($factory->createRouterChain(), $factory->createResourceRequestHandler());
@@ -65,7 +65,7 @@ class Framework
      *
      * @return Response
      */
-    public function run(Request $request)
+    public function run(Request $request): Response
     {
         try {
             $resourceRequest = $this->chainRouter->route($request);

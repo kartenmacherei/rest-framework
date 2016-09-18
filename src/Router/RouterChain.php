@@ -36,7 +36,7 @@ class RouterChain
      * @return ResourceRequest
      * @throws NoMoreRoutersException
      */
-    public function route(Request $request)
+    public function route(Request $request): ResourceRequest
     {
         if (null === $this->first) {
             throw new NoMoreRoutersException();

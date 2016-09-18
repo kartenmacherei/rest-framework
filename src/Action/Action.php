@@ -8,5 +8,5 @@ interface Action
     /**
      * @return Response
      */
-    public function execute();
+    public function execute(): Response;
 }

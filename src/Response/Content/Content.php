@@ -6,10 +6,10 @@ interface Content
     /**
      * @return string
      */
-    public function asString();
+    public function asString(): string;
 
     /**
      * @return ContentType
      */
-    public function getContentType();
+    public function getContentType(): ContentType;
 }

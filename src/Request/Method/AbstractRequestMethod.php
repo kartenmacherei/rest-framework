@@ -7,7 +7,7 @@ abstract class AbstractRequestMethod implements RequestMethod
      * @param AbstractRequestMethod $requestMethod
      * @return bool
      */
-    public function equals(AbstractRequestMethod $requestMethod)
+    public function equals(AbstractRequestMethod $requestMethod): bool
     {
         return get_class($this) == get_class($requestMethod);
     }

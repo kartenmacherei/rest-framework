@@ -10,7 +10,7 @@ interface Router
      * @param Request $request
      * @return ResourceRequest
      */
-    public function route(Request $request);
+    public function route(Request $request): ResourceRequest;
 
     /**
      * @param Router $router

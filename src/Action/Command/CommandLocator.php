@@ -15,5 +15,5 @@ interface CommandLocator
      *
      * @return Command
      */
-    public function getCommand(ResourceRequest $resourceRequest);
+    public function getCommand(ResourceRequest $resourceRequest): Command;
 }

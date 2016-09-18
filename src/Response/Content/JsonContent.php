@@ -26,15 +26,15 @@ class JsonContent implements Content
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->jsonString;
     }
 
     /**
-     * @return JsonContentType
+     * @return ContentType
      */
-    public function getContentType()
+    public function getContentType(): ContentType
     {
         return new JsonContentType();
     }

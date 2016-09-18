@@ -6,7 +6,7 @@ class PostRequestMethod extends AbstractRequestMethod
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return 'POST';
     }

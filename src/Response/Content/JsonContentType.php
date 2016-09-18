@@ -6,7 +6,7 @@ class JsonContentType implements ContentType
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return 'application/json';
     }

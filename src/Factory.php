@@ -11,7 +11,7 @@ class Factory
     /**
      * @return RouterChain
      */
-    public function createRouterChain()
+    public function createRouterChain(): RouterChain
     {
         return new RouterChain();
     }
@@ -19,7 +19,7 @@ class Factory
     /**
      * @return ResourceRequestHandler
      */
-    public function createResourceRequestHandler()
+    public function createResourceRequestHandler(): ResourceRequestHandler
     {
         return new ResourceRequestHandler($this->createCommandLocatorChain(), $this->createQueryLocatorChain());
     }
@@ -27,7 +27,7 @@ class Factory
     /**
      * @return CommandLocatorChain
      */
-    private function createCommandLocatorChain()
+    private function createCommandLocatorChain(): CommandLocatorChain
     {
         return new CommandLocatorChain();
     }
@@ -35,7 +35,7 @@ class Factory
     /**
      * @return QueryLocatorChain
      */
-    private function createQueryLocatorChain()
+    private function createQueryLocatorChain(): QueryLocatorChain
     {
         return new QueryLocatorChain();
     }

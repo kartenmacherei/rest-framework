@@ -14,7 +14,7 @@ class BasketRouter extends AbstractRouter
      */
     protected function canRoute(Request $request)
     {
-        return $request->getUri()->matches(new Pattern('/\/baskets\/\w+$/'));
+        return $request->getUri()->matches(new Pattern('/baskets/\w+$'));
     }
 
     /**

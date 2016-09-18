@@ -16,7 +16,7 @@ abstract class AbstractRouter implements Router
      * @return ResourceRequest
      * @throws NoMoreRoutersException
      */
-    public function route(Request $request)
+    public function route(Request $request): ResourceRequest
     {
         if ($this->canRoute($request)) {
             return $this->doRoute($request);
@@ -39,11 +39,11 @@ abstract class AbstractRouter implements Router
      * @param Request $request
      * @return bool
      */
-    abstract protected function canRoute(Request $request);
+    abstract protected function canRoute(Request $request): bool;
 
     /**
      * @param Request $request
      * @return ResourceRequest
      */
-    abstract protected function doRoute(Request $request);
+    abstract protected function doRoute(Request $request): ResourceRequest;
 }

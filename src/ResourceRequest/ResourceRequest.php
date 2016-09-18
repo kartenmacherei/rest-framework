@@ -1,11 +1,22 @@
 <?php
 namespace Kartenmacherei\RestFramework\ResourceRequest;
 
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
+
 interface ResourceRequest
 {
-    public function getSupportedMethods();
+    /**
+     * @return RequestMethod[]
+     */
+    public function getSupportedMethods(): array;
 
-    public function isReadRequest();
+    /**
+     * @return bool
+     */
+    public function isReadRequest(): bool;
 
-    public function isOptionsRequest();
+    /**
+     * @return bool
+     */
+    public function isOptionsRequest(): bool;
 }

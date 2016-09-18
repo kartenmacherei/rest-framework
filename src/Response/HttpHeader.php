@@ -21,7 +21,7 @@ class HttpHeader
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return sprintf('%s: %s', $this->name, $this->value);
     }

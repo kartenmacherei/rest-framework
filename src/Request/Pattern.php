@@ -3,23 +3,23 @@ namespace Kartenmacherei\RestFramework\Request;
 
 class Pattern
 {
+    const REGEX_DELIMITER = '/';
+
     /**
      * @var string
      */
     private $value = '';
 
     /**
-     * TODO escape pattern / enclose in delimiters automatically
-     *
      * @param string $value
      */
     public function __construct($value)
     {
-        $this->value = $value;
+        $this->value = str_replace(self::REGEX_DELIMITER, '\\' . self::REGEX_DELIMITER, $value);
     }
 
-    public function asString()
+    public function asString(): string
     {
-        return $this->value;
+        return sprintf('%s%s%s', self::REGEX_DELIMITER, $this->value, self::REGEX_DELIMITER);
     }
 }

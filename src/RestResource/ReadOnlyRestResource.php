@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\RestResource;
 
+use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
 use Kartenmacherei\RestFramework\Router\Router;
 
@@ -30,7 +31,7 @@ class ReadOnlyRestResource implements RestResource
     /**
      * @return Router
      */
-    public function getRouter()
+    public function getRouter(): Router
     {
         return $this->router;
     }
@@ -38,7 +39,7 @@ class ReadOnlyRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasQueryLocator()
+    public function hasQueryLocator(): bool
     {
         return true;
     }
@@ -46,7 +47,7 @@ class ReadOnlyRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasCommandLocator()
+    public function hasCommandLocator(): bool
     {
         return false;
     }
@@ -54,7 +55,7 @@ class ReadOnlyRestResource implements RestResource
     /**
      * @return QueryLocator
      */
-    public function getQueryLocator()
+    public function getQueryLocator(): QueryLocator
     {
         return $this->queryLocator;
     }
@@ -62,7 +63,7 @@ class ReadOnlyRestResource implements RestResource
     /**
      * @throws RestResourceException
      */
-    public function getCommandLocator()
+    public function getCommandLocator(): CommandLocator
     {
         throw new RestResourceException('Resource is read-only');
     }

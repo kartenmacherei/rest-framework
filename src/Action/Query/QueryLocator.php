@@ -15,5 +15,5 @@ interface QueryLocator
      *
      * @return Query
      */
-    public function getQuery(ResourceRequest $resourceRequest);
+    public function getQuery(ResourceRequest $resourceRequest): Query;
 }

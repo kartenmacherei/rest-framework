@@ -37,7 +37,7 @@ class ReadAndWriteRestResource implements RestResource
     /**
      * @return Router
      */
-    public function getRouter()
+    public function getRouter(): Router
     {
         return $this->router;
     }
@@ -45,7 +45,7 @@ class ReadAndWriteRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasQueryLocator()
+    public function hasQueryLocator(): bool
     {
         return true;
     }
@@ -53,7 +53,7 @@ class ReadAndWriteRestResource implements RestResource
     /**
      * @return bool
      */
-    public function hasCommandLocator()
+    public function hasCommandLocator(): bool
     {
         return true;
     }
@@ -61,7 +61,7 @@ class ReadAndWriteRestResource implements RestResource
     /**
      * @return QueryLocator
      */
-    public function getQueryLocator()
+    public function getQueryLocator(): QueryLocator
     {
         return $this->queryLocator;
     }
@@ -69,7 +69,7 @@ class ReadAndWriteRestResource implements RestResource
     /**
      * @return CommandLocator
      */
-    public function getCommandLocator()
+    public function getCommandLocator(): CommandLocator
     {
         return $this->commandLocator;
     }

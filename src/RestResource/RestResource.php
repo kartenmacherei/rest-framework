@@ -10,25 +10,25 @@ interface RestResource
     /**
      * @return Router
      */
-    public function getRouter();
+    public function getRouter(): Router;
 
     /**
      * @return bool
      */
-    public function hasQueryLocator();
+    public function hasQueryLocator(): bool;
 
     /**
      * @return bool
      */
-    public function hasCommandLocator();
+    public function hasCommandLocator(): bool;
 
     /**
      * @return QueryLocator
      */
-    public function getQueryLocator();
+    public function getQueryLocator(): QueryLocator;
 
     /**
      * @return CommandLocator
      */
-    public function getCommandLocator();
+    public function getCommandLocator(): CommandLocator;
 }

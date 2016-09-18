@@ -6,7 +6,7 @@ class PatchRequestMethod extends AbstractRequestMethod
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return 'PATCH';
     }

@@ -16,7 +16,7 @@ class Uri
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->value;
     }
@@ -25,7 +25,7 @@ class Uri
      * @param Pattern $pattern
      * @return bool
      */
-    public function matches(Pattern $pattern)
+    public function matches(Pattern $pattern): bool
     {
         return preg_match($pattern->asString(), $this->value) === 1;
     }
@@ -35,7 +35,7 @@ class Uri
      * @return string
      * @throws UriException
      */
-    public function getPathSegment($index)
+    public function getPathSegment($index): string
     {
         $path = parse_url($this->value, PHP_URL_PATH);
         $parts = explode('/', trim($path, '/'));

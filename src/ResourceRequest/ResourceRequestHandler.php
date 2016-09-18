@@ -50,7 +50,7 @@ class ResourceRequestHandler
      * @param ResourceRequest $resourceRequest
      * @return Response
      */
-    public function handle(ResourceRequest $resourceRequest)
+    public function handle(ResourceRequest $resourceRequest): Response
     {
         if ($resourceRequest->isOptionsRequest()) {
             return new OptionsResponse($resourceRequest->getSupportedMethods());

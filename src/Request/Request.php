@@ -7,6 +7,7 @@ use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 
 class Request
@@ -35,7 +36,7 @@ class Request
      * @return Request
      * @throws UnsupportedRequestMethodException
      */
-    public static function fromSuperGlobals()
+    public static function fromSuperGlobals(): Request
     {
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
         $uri = new Uri($_SERVER['REQUEST_URI']);
@@ -60,15 +61,15 @@ class Request
     /**
      * @return Uri
      */
-    public function getUri()
+    public function getUri(): Uri
     {
         return $this->uri;
     }
 
     /**
-     * @return AbstractRequestMethod
+     * @return RequestMethod
      */
-    public function getMethod()
+    public function getMethod(): RequestMethod
     {
         return $this->requestMethod;
     }
