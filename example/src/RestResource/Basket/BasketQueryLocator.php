@@ -1,9 +1,9 @@
 <?php
-namespace Kartenmacherei\BasketService;
+namespace Kartenmacherei\ExampleService\RestResource\Basket;
 
-use Kartenmacherei\RestFramework\AbstractQueryLocator;
-use Kartenmacherei\RestFramework\Query;
-use Kartenmacherei\RestFramework\ResourceRequest;
+use Kartenmacherei\RestFramework\Action\Query\AbstractQueryLocator;
+use Kartenmacherei\RestFramework\Action\Query\Query;
+use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
 class BasketQueryLocator extends AbstractQueryLocator
 {

@@ -1,9 +1,9 @@
 <?php
-namespace Kartenmacherei\BasketService;
+namespace Kartenmacherei\ExampleService\RestResource\Basket;
 
-use Kartenmacherei\RestFramework\AbstractRouter;
-use Kartenmacherei\RestFramework\Pattern;
-use Kartenmacherei\RestFramework\Request;
+use Kartenmacherei\RestFramework\Router\AbstractRouter;
+use Kartenmacherei\RestFramework\Request\Pattern;
+use Kartenmacherei\RestFramework\Request\Request;
 
 class BasketRouter extends AbstractRouter
 {

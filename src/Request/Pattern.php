@@ -1,11 +1,16 @@
 <?php
-namespace Kartenmacherei\ExampleService\Domain;
+namespace Kartenmacherei\RestFramework\Request;
 
-class BasketIdentifier
+class Pattern
 {
+    /**
+     * @var string
+     */
     private $value = '';
 
     /**
+     * TODO escape pattern / enclose in delimiters automatically
+     *
      * @param string $value
      */
     public function __construct($value)
@@ -13,12 +18,8 @@ class BasketIdentifier
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function asString()
     {
         return $this->value;
     }
-
 }

@@ -1,14 +1,15 @@
 <?php
-namespace Kartenmacherei\BasketService;
+namespace Kartenmacherei\ExampleService\RestResource\Basket;
 
-use Kartenmacherei\RestFramework\AbstractResourceRequest;
-use Kartenmacherei\RestFramework\GetRequestMethod;
-use Kartenmacherei\RestFramework\RequestMethod;
+use Kartenmacherei\ExampleService\Domain\BasketIdentifier;
+use Kartenmacherei\RestFramework\ResourceRequest\AbstractResourceRequest;
+use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 
 class BasketResourceRequest extends AbstractResourceRequest
 {
     /**
-     * @return RequestMethod[]
+     * @return AbstractRequestMethod[]
      */
     public function getSupportedMethods()
     {

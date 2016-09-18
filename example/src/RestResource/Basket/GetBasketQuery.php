@@ -1,9 +1,10 @@
 <?php
-namespace Kartenmacherei\BasketService;
+namespace Kartenmacherei\ExampleService\RestResource\Basket;
 
-use Kartenmacherei\RestFramework\ContentResponse;
-use Kartenmacherei\RestFramework\JsonContent;
-use Kartenmacherei\RestFramework\Query;
+use Kartenmacherei\ExampleService\Domain\BasketIdentifier;
+use Kartenmacherei\RestFramework\Response\ContentResponse;
+use Kartenmacherei\RestFramework\Response\Content\JsonContent;
+use Kartenmacherei\RestFramework\Action\Query\Query;
 
 class GetBasketQuery implements Query
 {
