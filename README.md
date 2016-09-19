@@ -37,6 +37,11 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 
 ## Using the Framework
 
+### Requirements
+
+- Composer
+- PHP 7.0+
+
 ### Add the Framework to your composer.json:
 ```
 	"require": {
