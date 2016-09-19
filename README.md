@@ -6,26 +6,41 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 
 ## Components
 
+### RestResource
+
+- Returns a `Router` that determines if a given `URL` matches this `RestResource`
+- Returns a `QueryLocator` and / or a `CommandLocator` 
+
+### ResourceRequest
+
+- Describes the request against a specific resource
+- Returns a list of supported request methods
+- Returns the request method
+
+### Router
+
+- Returns a `ResourceRequest` based on a given `URL` 
+
 ### Command
 
-A command changes the state of a resource (like creating or updating).
+- Changes the state of a resource (like creating or updating)
 
 ### Query
 
-A query does not change the state of a resource and only returns existing data.
+- Does not change the state of a resource and only returns existing data.
 
 ### Request 
 
-### Response
 
-### RestResource
+
+### Response
 
 ## Using the Framework
 
 ### Add the Framework to your composer.json:
 ```
 	"require": {
-		"kartenmacherei/http-framework": "^0.1.0"
+		"kartenmacherei/rest-framework": "^0.1.0"
 	}
 ```
 
@@ -34,9 +49,27 @@ As long as the code is not publicly available, you'll also need to add a link to
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@bitbucket.org:kartenmacherei/http-framework.git"
+            "url":  "git@bitbucket.org:kartenmacherei/rest-framework.git"
         },
     ]
 ```
 
 ### Connect your code to the Framework:
+```php
+// create a request
+$request = Request::fromSuperGlobals();
+
+// create a new instance of the framework
+$framework = Framework::createInstance();
+
+// register a RestResource
+$framework->registerResource(new ReadOnlyRestResource(new BasketRouter(), new BasketQueryLocator()));
+
+// let the framework process the request
+$response = $framework->run($request);
+
+// send the response to the client
+$response->flush();
+```
+
+See `/example/src/Application` for a working example.
