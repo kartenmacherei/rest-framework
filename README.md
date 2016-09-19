@@ -73,3 +73,7 @@ $response->flush();
 ```
 
 See `/example/src/Application` for a working example.
+
+## License
+
+This software is licensed under the terms of the [MIT license](https://opensource.org/licenses/MIT). See LICENSE.mdf for the full license.  
