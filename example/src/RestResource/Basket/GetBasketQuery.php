@@ -5,6 +5,7 @@ use Kartenmacherei\ExampleService\Domain\BasketIdentifier;
 use Kartenmacherei\RestFramework\Response\ContentResponse;
 use Kartenmacherei\RestFramework\Response\Content\JsonContent;
 use Kartenmacherei\RestFramework\Action\Query\Query;
+use Kartenmacherei\RestFramework\Response\Response;
 
 class GetBasketQuery implements Query
 {
@@ -21,7 +22,7 @@ class GetBasketQuery implements Query
         $this->basketIdentifier = $basketIdentifier;
     }
 
-    public function execute()
+    public function execute(): Response
     {
         return new ContentResponse(
             new JsonContent(

@@ -11,7 +11,7 @@ class BasketResourceRequest extends AbstractResourceRequest
     /**
      * @return AbstractRequestMethod[]
      */
-    public function getSupportedMethods()
+    public function getSupportedMethods(): array
     {
         return [new GetRequestMethod()];
     }

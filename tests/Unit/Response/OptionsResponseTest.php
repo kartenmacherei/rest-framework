@@ -3,8 +3,6 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
-use Kartenmacherei\RestFramework\Response\Content\JsonContent;
-use Kartenmacherei\RestFramework\Response\ContentResponse;
 use Kartenmacherei\RestFramework\Response\OptionsResponse;
 use PHPUnit_Framework_TestCase;
 
