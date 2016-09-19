@@ -39,7 +39,7 @@ class Uri
     {
         $path = parse_url($this->value, PHP_URL_PATH);
         $parts = explode('/', trim($path, '/'));
-        if (count($parts) < $index) {
+        if (count($parts) <= $index) {
             throw new UriException(sprintf('URI does not have %d segments', $index));
         }
         return $parts[$index];

@@ -5,6 +5,9 @@ use Throwable;
 
 class ErrorHandler
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public static function register()
     {
         $self = new self();

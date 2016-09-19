@@ -8,6 +8,6 @@ class GetRequestMethod extends AbstractRequestMethod
      */
     public function asString(): string
     {
-        return 'GET';
+        return RequestMethod::GET;
     }
 }

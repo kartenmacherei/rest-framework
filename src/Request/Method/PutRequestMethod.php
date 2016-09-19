@@ -8,6 +8,6 @@ class PutRequestMethod extends AbstractRequestMethod
      */
     public function asString(): string
     {
-        return 'PUT';
+        return RequestMethod::PUT;
     }
 }

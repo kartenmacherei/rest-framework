@@ -20,10 +20,10 @@ abstract class AbstractResourceRequest implements ResourceRequest
     private $uri;
 
     /**
-     * @param AbstractRequestMethod $requestMethod
+     * @param RequestMethod $requestMethod
      * @param Uri $uri
      */
-    public function __construct(AbstractRequestMethod $requestMethod, Uri $uri)
+    public function __construct(RequestMethod $requestMethod, Uri $uri)
     {
         $this->requestMethod = $requestMethod;
         $this->uri = $uri;

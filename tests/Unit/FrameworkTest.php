@@ -16,6 +16,11 @@ use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\Router;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 
+/**
+ * @covers \Kartenmacherei\RestFramework\Framework
+ * @covers \Kartenmacherei\RestFramework\Factory
+ * @covers \Kartenmacherei\RestFramework\ResourceRequest\ResourceRequestHandler
+ */
 class FrameworkTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateInstanceReturnsExpectedObject()

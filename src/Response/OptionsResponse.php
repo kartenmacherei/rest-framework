@@ -26,6 +26,7 @@ class OptionsResponse implements Response
         }
         $headerValue = implode(',', $methods);
 
+        http_response_code(200);
         header((new HttpHeader('Allow', $headerValue))->asString());
         header((new HttpHeader('Access-Control-Allow-Methods', $headerValue))->asString());
     }

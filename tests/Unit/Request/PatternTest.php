@@ -3,6 +3,9 @@ namespace Kartenmacherei\RestFramework\UnitTests\Request;
 
 use Kartenmacherei\RestFramework\Request\Pattern;
 
+/**
+ * @covers \Kartenmacherei\RestFramework\Request\Pattern
+ */
 class PatternTest extends \PHPUnit_Framework_TestCase
 {
     /**

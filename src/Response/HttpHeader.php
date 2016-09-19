@@ -3,12 +3,17 @@ namespace Kartenmacherei\RestFramework\Response;
 
 class HttpHeader
 {
+    /**
+     * @var string
+     */
     private $name = '';
 
+    /**
+     * @var string
+     */
     private $value = '';
 
     /**
-     * HttpHeader constructor.
      * @param string $name
      * @param string $value
      */

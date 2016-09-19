@@ -8,6 +8,6 @@ class PostRequestMethod extends AbstractRequestMethod
      */
     public function asString(): string
     {
-        return 'POST';
+        return RequestMethod::POST;
     }
 }

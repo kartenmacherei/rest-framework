@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\Request;
 
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
@@ -41,15 +42,17 @@ class Request
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
         $uri = new Uri($_SERVER['REQUEST_URI']);
         switch ($method) {
-            case 'OPTIONS':
+            case RequestMethod::OPTIONS:
                 return new self(new OptionsRequestMethod(), $uri);
-            case 'GET':
+            case RequestMethod::DELETE:
+                return new self(new DeleteRequestMethod(), $uri);
+            case RequestMethod::GET:
                 return new self(new GetRequestMethod(), $uri);
-            case 'PATCH':
+            case RequestMethod::PATCH:
                 return new self(new PatchRequestMethod(), $uri);
-            case 'POST':
+            case RequestMethod::POST:
                 return new self(new PostRequestMethod(), $uri);
-            case 'PUT':
+            case RequestMethod::PUT:
                 return new self(new PutRequestMethod(), $uri);
         }
 

@@ -8,6 +8,6 @@ class OptionsRequestMethod extends AbstractRequestMethod
      */
     public function asString(): string
     {
-        return 'OPTIONS';
+        return RequestMethod::OPTIONS;
     }
 }
