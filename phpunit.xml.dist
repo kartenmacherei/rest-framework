@@ -7,9 +7,13 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutTodoAnnotatedTests="true"
+         forceCoversAnnotation="true"
          verbose="true">
     <testsuite name="Unit">
         <directory suffix="Test.php">tests/Unit</directory>
+    </testsuite>
+    <testsuite name="ExampleTests">
+        <directory suffix="Test.php">example/tests</directory>
     </testsuite>
 
     <logging>
