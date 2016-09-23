@@ -4,10 +4,10 @@ namespace Kartenmacherei\RestFramework\Router;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
-abstract class AbstractRouter implements Router
+abstract class AbstractResourceRouter implements ResourceRouter
 {
     /**
-     * @var Router
+     * @var ResourceRouter
      */
     private $next;
 
@@ -28,9 +28,9 @@ abstract class AbstractRouter implements Router
     }
 
     /**
-     * @param Router $router
+     * @param ResourceRouter $router
      */
-    public function setNext(Router $router)
+    public function setNext(ResourceRouter $router)
     {
         $this->next = $router;
     }

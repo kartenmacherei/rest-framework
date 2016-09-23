@@ -3,16 +3,16 @@ namespace Kartenmacherei\RestFramework\UnitTests\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
-use Kartenmacherei\RestFramework\Router\AbstractRouter;
+use Kartenmacherei\RestFramework\Router\AbstractResourceRouter;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @covers \Kartenmacherei\RestFramework\Router\AbstractRouter
+ * @covers \Kartenmacherei\RestFramework\Router\AbstractResourceRouter
  */
-class AbstractRouterTest extends PHPUnit_Framework_TestCase
+class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
 {
 
     public function testRouteThrowsException()
@@ -53,11 +53,11 @@ class AbstractRouterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|Router
+     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRouter
      */
     private function getRouterMock()
     {
-        return $this->createMock(Router::class);
+        return $this->createMock(ResourceRouter::class);
     }
 
     /**
@@ -77,10 +77,10 @@ class AbstractRouterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|AbstractRouter
+     * @return PHPUnit_Framework_MockObject_MockObject|AbstractResourceRouter
      */
     private function getAbstractRouter()
     {
-        return $this->getMockForAbstractClass(AbstractRouter::class);
+        return $this->getMockForAbstractClass(AbstractResourceRouter::class);
     }
 }

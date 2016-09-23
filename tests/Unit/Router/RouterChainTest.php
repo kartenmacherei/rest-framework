@@ -4,7 +4,7 @@ namespace Kartenmacherei\RestFramework\UnitTests\Router;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
@@ -58,11 +58,11 @@ class RouterChainTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|Router
+     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRouter
      */
     private function getRouterMock()
     {
-        return $this->createMock(Router::class);
+        return $this->createMock(ResourceRouter::class);
     }
 
     /**

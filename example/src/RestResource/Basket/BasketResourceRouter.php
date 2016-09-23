@@ -2,11 +2,11 @@
 namespace Kartenmacherei\ExampleService\RestResource\Basket;
 
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
-use Kartenmacherei\RestFramework\Router\AbstractRouter;
+use Kartenmacherei\RestFramework\Router\AbstractResourceRouter;
 use Kartenmacherei\RestFramework\Request\Pattern;
 use Kartenmacherei\RestFramework\Request\Request;
 
-class BasketRouter extends AbstractRouter
+class BasketResourceRouter extends AbstractResourceRouter
 {
 
     /**

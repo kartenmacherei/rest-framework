@@ -4,7 +4,7 @@ namespace Kartenmacherei\RestFramework\UnitTests\RestResource;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\RestResource\WriteOnlyRestResource;
 use Kartenmacherei\RestFramework\RestResource\RestResourceException;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 
@@ -50,11 +50,11 @@ class WriteOnlyRestResourceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|Router
+     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRouter
      */
     private function getRouterMock()
     {
-        return $this->createMock(Router::class);
+        return $this->createMock(ResourceRouter::class);
     }
 
     /**

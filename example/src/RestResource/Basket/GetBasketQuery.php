@@ -22,6 +22,9 @@ class GetBasketQuery implements Query
         $this->basketIdentifier = $basketIdentifier;
     }
 
+    /**
+     * @return Response
+     */
     public function execute(): Response
     {
         return new ContentResponse(

@@ -3,12 +3,12 @@ namespace Kartenmacherei\RestFramework\RestResource;
 
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 
 class ReadOnlyRestResource implements RestResource
 {
     /**
-     * @var Router
+     * @var ResourceRouter
      */
     private $router;
 
@@ -19,19 +19,19 @@ class ReadOnlyRestResource implements RestResource
 
     /**
      * ReadOnlyRestResource constructor.
-     * @param Router $router
+     * @param ResourceRouter $router
      * @param QueryLocator $queryLocator
      */
-    public function __construct(Router $router, QueryLocator $queryLocator)
+    public function __construct(ResourceRouter $router, QueryLocator $queryLocator)
     {
         $this->router = $router;
         $this->queryLocator = $queryLocator;
     }
 
     /**
-     * @return Router
+     * @return ResourceRouter
      */
-    public function getRouter(): Router
+    public function getRouter(): ResourceRouter
     {
         return $this->router;
     }

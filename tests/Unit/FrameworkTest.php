@@ -13,7 +13,7 @@ use Kartenmacherei\RestFramework\Response\NotFoundResponse;
 use Kartenmacherei\RestFramework\Response\Response;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 
 /**
@@ -136,11 +136,11 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Router
+     * @return \PHPUnit_Framework_MockObject_MockObject|ResourceRouter
      */
     private function getRouterMock()
     {
-        return $this->createMock(Router::class);
+        return $this->createMock(ResourceRouter::class);
     }
 
     /**

@@ -8,19 +8,19 @@ class RouterChain
 {
 
     /**
-     * @var Router
+     * @var ResourceRouter
      */
     private $first;
 
     /**
-     * @var Router
+     * @var ResourceRouter
      */
     private $last;
 
     /**
-     * @param Router $router
+     * @param ResourceRouter $router
      */
-    public function addRouter(Router $router)
+    public function addRouter(ResourceRouter $router)
     {
         if (null === $this->first) {
             $this->first = $router;

@@ -3,14 +3,14 @@ namespace Kartenmacherei\RestFramework\RestResource;
 
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
-use Kartenmacherei\RestFramework\Router\Router;
+use Kartenmacherei\RestFramework\Router\ResourceRouter;
 
 interface RestResource
 {
     /**
-     * @return Router
+     * @return ResourceRouter
      */
-    public function getRouter(): Router;
+    public function getRouter(): ResourceRouter;
 
     /**
      * @return bool
