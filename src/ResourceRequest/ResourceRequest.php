@@ -19,4 +19,9 @@ interface ResourceRequest
      * @return bool
      */
     public function isOptionsRequest(): bool;
+
+    /**
+     * @return RequestMethod
+     */
+    public function getRequestMethod(): RequestMethod;
 }
