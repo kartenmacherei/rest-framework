@@ -1,10 +1,26 @@
 <?php
 namespace Kartenmacherei\RestFramework\Response\Content;
 
-interface ContentType
+abstract class ContentType
 {
+    const JSON = 'application/json';
+
+    /**
+     * @param $type
+     * @return ContentType
+     * @throws UnsupportedContentTypeException
+     */
+    public static function fromString($type): ContentType
+    {
+        switch ($type) {
+            case self::JSON:
+                return new JsonContentType();
+        }
+        throw new UnsupportedContentTypeException(sprintf('Content type %s is not supported', $type));
+    }
+
     /**
      * @return string
      */
-    public function asString(): string;
+    abstract public function asString(): string;
 }

@@ -1,9 +1,11 @@
 <?php
 namespace Kartenmacherei\RestFramework\ResourceRequest;
 
+use Kartenmacherei\RestFramework\Action\Action;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocatorChain;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
+use Kartenmacherei\RestFramework\Response\BadRequestResponse;
 use Kartenmacherei\RestFramework\Response\OptionsResponse;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocatorChain;
 use Kartenmacherei\RestFramework\Response\Response;
@@ -55,9 +57,22 @@ class ResourceRequestHandler
         if ($resourceRequest->isOptionsRequest()) {
             return new OptionsResponse($resourceRequest->getSupportedMethods());
         }
-        if ($resourceRequest->isReadRequest()) {
-            return $this->queryLocator->getQuery($resourceRequest)->execute();
+        try {
+            return $this->getAction($resourceRequest)->execute();
+        } catch (BadRequestException $e) {
+            return new BadRequestResponse($e);
         }
-        return $this->commandLocatorChain->getCommand($resourceRequest)->execute();
+    }
+
+    /**
+     * @param ResourceRequest $resourceRequest
+     * @return Action
+     */
+    private function getAction(ResourceRequest $resourceRequest): Action
+    {
+        if ($resourceRequest->isReadRequest()) {
+            return $this->queryLocator->getQuery($resourceRequest);
+        }
+        return $this->commandLocatorChain->getCommand($resourceRequest);
     }
 }

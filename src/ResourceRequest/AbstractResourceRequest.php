@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\ResourceRequest;
 
+use Kartenmacherei\RestFramework\Request\Body\Body;
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
@@ -18,15 +19,29 @@ abstract class AbstractResourceRequest implements ResourceRequest
      * @var Uri
      */
     private $uri;
+    /**
+     * @var Body
+     */
+    private $requestBody;
 
     /**
      * @param RequestMethod $requestMethod
      * @param Uri $uri
+     * @param Body $requestBody
      */
-    public function __construct(RequestMethod $requestMethod, Uri $uri)
+    public function __construct(RequestMethod $requestMethod, Uri $uri, Body $requestBody)
     {
         $this->requestMethod = $requestMethod;
         $this->uri = $uri;
+        $this->requestBody = $requestBody;
+    }
+
+    /**
+     * @return Body
+     */
+    public function getRequestBody(): Body
+    {
+        return $this->requestBody;
     }
 
     /**

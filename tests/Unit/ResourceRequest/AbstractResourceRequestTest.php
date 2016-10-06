@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests\ResourceRequest;
 
+use Kartenmacherei\RestFramework\Request\Body\Body;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Uri;
 use Kartenmacherei\RestFramework\ResourceRequest\AbstractResourceRequest;
@@ -15,7 +16,7 @@ class AbstractResourceRequestTest extends PHPUnit_Framework_TestCase
     public function testGetRequestMethod()
     {
         $requestMethod = $this->getRequestMethodMock();
-        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock());
+        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock(), $this->getBodyMock());
 
         $this->assertSame($requestMethod, $resourceRequest->getRequestMethod());
     }
@@ -29,7 +30,7 @@ class AbstractResourceRequestTest extends PHPUnit_Framework_TestCase
     {
         $requestMethod = $this->getRequestMethodMock();
         $requestMethod->method('equals')->willReturn($value);
-        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock());
+        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock(), $this->getBodyMock());
         $this->assertSame($value, $resourceRequest->isReadRequest());
     }
 
@@ -42,7 +43,7 @@ class AbstractResourceRequestTest extends PHPUnit_Framework_TestCase
     {
         $requestMethod = $this->getRequestMethodMock();
         $requestMethod->method('equals')->willReturn($value);
-        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock());
+        $resourceRequest = $this->getAbstractResourceRequest($requestMethod, $this->getUriMock(), $this->getBodyMock());
         $this->assertSame($value, $resourceRequest->isOptionsRequest());
     }
 
@@ -57,12 +58,13 @@ class AbstractResourceRequestTest extends PHPUnit_Framework_TestCase
     /**
      * @param RequestMethod $requestMethod
      * @param Uri $uri
+     * @param Body $body
      *
      * @return AbstractResourceRequest|PHPUnit_Framework_MockObject_MockObject
      */
-    private function getAbstractResourceRequest(RequestMethod $requestMethod, Uri $uri)
+    private function getAbstractResourceRequest(RequestMethod $requestMethod, Uri $uri, Body $body)
     {
-        return $this->getMockForAbstractClass(AbstractResourceRequest::class, [$requestMethod, $uri]);
+        return $this->getMockForAbstractClass(AbstractResourceRequest::class, [$requestMethod, $uri, $body]);
     }
 
     /**
@@ -79,6 +81,14 @@ class AbstractResourceRequestTest extends PHPUnit_Framework_TestCase
     private function getUriMock()
     {
         return $this->createMock(Uri::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|Body
+     */
+    private function getBodyMock()
+    {
+        return $this->createMock(Body::class);
     }
 
 }

@@ -1,14 +1,14 @@
 <?php
 namespace Kartenmacherei\RestFramework\Response\Content;
 
-class JsonContentType implements ContentType
+class JsonContentType extends ContentType
 {
     /**
      * @return string
      */
     public function asString(): string
     {
-        return 'application/json';
+        return self::JSON;
     }
 
 }
