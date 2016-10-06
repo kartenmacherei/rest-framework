@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests\Request;
 
+use Kartenmacherei\RestFramework\EnsureException;
 use Kartenmacherei\RestFramework\Request\Pattern;
 use Kartenmacherei\RestFramework\Request\Uri;
 use Kartenmacherei\RestFramework\Request\UriException;
@@ -31,6 +32,13 @@ class UriTest extends PHPUnit_Framework_TestCase
         $uri = new Uri('/foo/bar');
         $this->expectException(UriException::class);
         $uri->getPathSegment(2);
+    }
+
+    public function testGetPathSegmentsThrowsExceptionIfIndexIsNegative()
+    {
+        $uri = new Uri('/foo/bar');
+        $this->expectException(EnsureException::class);
+        $uri->getPathSegment(-1);
     }
 
     /**

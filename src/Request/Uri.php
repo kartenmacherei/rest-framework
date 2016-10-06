@@ -1,6 +1,8 @@
 <?php
 namespace Kartenmacherei\RestFramework\Request;
 
+use Kartenmacherei\RestFramework\EnsureException;
+
 class Uri
 {
     private $value = '';
@@ -33,10 +35,14 @@ class Uri
     /**
      * @param int $index
      * @return string
+     * @throws EnsureException
      * @throws UriException
      */
-    public function getPathSegment($index): string
+    public function getPathSegment(int $index): string
     {
+        if ($index < 0) {
+            throw new EnsureException('Index must not be negative');
+        }
         $path = parse_url($this->value, PHP_URL_PATH);
         $parts = explode('/', trim($path, '/'));
         if (count($parts) <= $index) {
