@@ -18,7 +18,7 @@ class BasketCollectionResourceRouter extends AbstractResourceRouter
      */
     protected function doRoute(Request $request): ResourceRequest
     {
-        return new BasketCollectionResourceRequest($request->getMethod(), $request->getUri());
+        return new BasketCollectionResourceRequest($request->getMethod(), $request->getUri(), $request->getBody());
     }
 
 }

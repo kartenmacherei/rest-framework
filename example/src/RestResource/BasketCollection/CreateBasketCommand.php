@@ -8,15 +8,25 @@ use Kartenmacherei\RestFramework\Response\Response;
 class CreateBasketCommand implements Command
 {
     /**
-     * @var BasketItem
+     * @var BasketCollectionResourceRequest $resourceRequest
      */
-    private $basketItem;
+    private $resourceRequest;
+
+    /**
+     * @param BasketCollectionResourceRequest $resourceRequest
+     */
+    public function __construct(BasketCollectionResourceRequest $resourceRequest)
+    {
+        $this->resourceRequest = $resourceRequest;
+    }
 
     /**
      * @return Response
      */
     public function execute(): Response
     {
+        $item = $this->resourceRequest->getBasketItem();
+        var_dump($item);
         return new CreatedResponse();
     }
 }

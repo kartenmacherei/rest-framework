@@ -14,16 +14,16 @@ class BasketItem
     private $quantity = 0;
 
     /**
-     * @var float
+     * @var int
      */
-    private $price = 0.00;
+    private $price = 0;
 
     /**
      * @param string $sku
      * @param int $quantity
-     * @param float $price
+     * @param int $price
      */
-    public function __construct(string $sku, int $quantity, float $price)
+    public function __construct(string $sku, int $quantity, int $price)
     {
         $this->sku = $sku;
         $this->quantity = $quantity;
@@ -47,9 +47,9 @@ class BasketItem
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getPrice(): float
+    public function getPrice(): int
     {
         return $this->price;
     }

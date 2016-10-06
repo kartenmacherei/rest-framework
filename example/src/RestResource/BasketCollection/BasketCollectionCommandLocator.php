@@ -16,8 +16,9 @@ class BasketCollectionCommandLocator extends AbstractCommandLocator
      */
     protected function buildCommand(ResourceRequest $resourceRequest): Command
     {
+        /** @var BasketCollectionResourceRequest $resourceRequest */
         if ($resourceRequest->getRequestMethod()->equals(new PostRequestMethod())) {
-            return new CreateBasketCommand();
+            return new CreateBasketCommand($resourceRequest);
         }
         throw new UnsupportedRequestMethodException();
     }

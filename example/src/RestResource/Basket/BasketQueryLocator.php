@@ -14,7 +14,7 @@ class BasketQueryLocator extends AbstractQueryLocator
     protected function buildQuery(ResourceRequest $resourceRequest): Query
     {
         /** @var BasketResourceRequest $resourceRequest */
-        return new GetBasketQuery($resourceRequest->getBasketIdentifier());
+        return new GetBasketQuery($resourceRequest);
     }
 
     /**
