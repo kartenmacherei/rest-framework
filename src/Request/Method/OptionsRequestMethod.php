@@ -10,4 +10,14 @@ class OptionsRequestMethod extends AbstractRequestMethod
     {
         return RequestMethod::OPTIONS;
     }
+
+    /**
+     * @return bool
+     */
+    public function isOptionsMethod(): bool
+    {
+        return true;
+    }
+
+
 }

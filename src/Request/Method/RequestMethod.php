@@ -20,4 +20,8 @@ interface RequestMethod
      * @return string
      */
     public function asString(): string;
+
+    public function isReadMethod(): bool;
+
+    public function isOptionsMethod(): bool;
 }

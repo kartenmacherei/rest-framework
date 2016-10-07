@@ -11,4 +11,22 @@ abstract class AbstractRequestMethod implements RequestMethod
     {
         return get_class($this) === get_class($requestMethod);
     }
+
+    /**
+     * @return bool
+     */
+    public function isReadMethod(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptionsMethod(): bool
+    {
+        return false;
+    }
+
+
 }

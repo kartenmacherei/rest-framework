@@ -10,4 +10,14 @@ class GetRequestMethod extends AbstractRequestMethod
     {
         return RequestMethod::GET;
     }
+
+    /**
+     * @return bool
+     */
+    public function isReadMethod(): bool
+    {
+        return true;
+    }
+
+
 }

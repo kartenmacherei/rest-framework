@@ -9,19 +9,4 @@ interface ResourceRequest
      * @return RequestMethod[]
      */
     public function getSupportedMethods(): array;
-
-    /**
-     * @return bool
-     */
-    public function isReadRequest(): bool;
-
-    /**
-     * @return bool
-     */
-    public function isOptionsRequest(): bool;
-
-    /**
-     * @return RequestMethod
-     */
-    public function getRequestMethod(): RequestMethod;
 }

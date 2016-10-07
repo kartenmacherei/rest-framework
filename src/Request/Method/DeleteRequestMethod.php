@@ -10,4 +10,5 @@ class DeleteRequestMethod extends AbstractRequestMethod
     {
         return RequestMethod::DELETE;
     }
+
 }

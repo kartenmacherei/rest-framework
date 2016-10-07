@@ -73,7 +73,7 @@ class Framework
     {
         try {
             $resourceRequest = $this->chainRouter->route($request);
-            return $this->resourceRequestHandler->handle($resourceRequest);
+            return $this->resourceRequestHandler->handle($request->getMethod(), $resourceRequest);
         } catch (NoMoreLocatorsException $e) {
             return new MethodNotAllowedResponse();
         } catch (NoMoreRoutersException $e) {

@@ -5,6 +5,7 @@ use Kartenmacherei\RestFramework\Action\Action;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocatorChain;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Response\BadRequestResponse;
 use Kartenmacherei\RestFramework\Response\OptionsResponse;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocatorChain;
@@ -49,30 +50,32 @@ class ResourceRequestHandler
     }
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
      * @return Response
      */
-    public function handle(ResourceRequest $resourceRequest): Response
+    public function handle(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Response
     {
-        if ($resourceRequest->isOptionsRequest()) {
+        if ($requestMethod->isOptionsMethod()) {
             return new OptionsResponse($resourceRequest->getSupportedMethods());
         }
         try {
-            return $this->getAction($resourceRequest)->execute();
+            return $this->getAction($requestMethod, $resourceRequest)->execute();
         } catch (BadRequestException $e) {
             return new BadRequestResponse($e);
         }
     }
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
      * @return Action
      */
-    private function getAction(ResourceRequest $resourceRequest): Action
+    private function getAction(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Action
     {
-        if ($resourceRequest->isReadRequest()) {
+        if ($requestMethod->isReadMethod()) {
             return $this->queryLocator->getQuery($resourceRequest);
         }
-        return $this->commandLocatorChain->getCommand($resourceRequest);
+        return $this->commandLocatorChain->getCommand($requestMethod, $resourceRequest);
     }
 }

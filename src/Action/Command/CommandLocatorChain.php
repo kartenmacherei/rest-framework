@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\Action\Command;
 
 use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
 class CommandLocatorChain
@@ -31,16 +32,17 @@ class CommandLocatorChain
     }
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
      * @return Command
      * @throws NoMoreLocatorsException
      */
-    public function getCommand(ResourceRequest $resourceRequest): Command
+    public function getCommand(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Command
     {
         if (null === $this->first) {
             throw new NoMoreLocatorsException();
         }
-        return $this->first->getCommand($resourceRequest);
+        return $this->first->getCommand($requestMethod, $resourceRequest);
     }
 
     

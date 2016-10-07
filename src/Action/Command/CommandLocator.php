@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\Action\Command;
 
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
 interface CommandLocator
@@ -11,9 +12,9 @@ interface CommandLocator
     public function setNext(CommandLocator $commandLocator);
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
-     *
      * @return Command
      */
-    public function getCommand(ResourceRequest $resourceRequest): Command;
+    public function getCommand(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Command;
 }

@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\Action\Command;
 
 use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
 abstract class AbstractCommandLocator implements CommandLocator
@@ -12,17 +13,18 @@ abstract class AbstractCommandLocator implements CommandLocator
     private $next;
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
      * @return Command
      * @throws NoMoreLocatorsException
      */
-    public function getCommand(ResourceRequest $resourceRequest): Command
+    public function getCommand(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Command
     {
         if ($this->matches($resourceRequest)) {
-            return $this->buildCommand($resourceRequest);
+            return $this->buildCommand($requestMethod, $resourceRequest);
         }
         if (null !== $this->next) {
-            return $this->next->getCommand($resourceRequest);
+            return $this->next->getCommand($requestMethod, $resourceRequest);
         }
 
         throw new NoMoreLocatorsException();
@@ -37,10 +39,11 @@ abstract class AbstractCommandLocator implements CommandLocator
     }
 
     /**
+     * @param RequestMethod $requestMethod
      * @param ResourceRequest $resourceRequest
      * @return Command
      */
-    abstract protected function buildCommand(ResourceRequest $resourceRequest): Command;
+    abstract protected function buildCommand(RequestMethod $requestMethod, ResourceRequest $resourceRequest): Command;
 
     /**
      * @param ResourceRequest $resourceRequest
