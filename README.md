@@ -45,18 +45,8 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 ### Add the Framework to your composer.json:
 ```
 	"require": {
-		"kartenmacherei/rest-framework": "^0.1.0"
+		"kartenmacherei/rest-framework": "dev-master"
 	}
-```
-
-As long as the code is not publicly available, you'll also need to add a link to our private BitBucket repo:
-```
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:kartenmacherei/rest-framework.git"
-        }
-    ]
 ```
 
 ### Connect your code to the Framework:
