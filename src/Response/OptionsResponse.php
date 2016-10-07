@@ -1,7 +1,6 @@
 <?php
 namespace Kartenmacherei\RestFramework\Response;
 
-use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 
 class OptionsResponse implements Response

@@ -2,7 +2,6 @@
 namespace Kartenmacherei\RestFramework\ResourceRequest;
 
 use Kartenmacherei\RestFramework\Request\Body\Body;
-use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;

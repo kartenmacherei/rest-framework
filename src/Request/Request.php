@@ -2,7 +2,6 @@
 namespace Kartenmacherei\RestFramework\Request;
 
 use Kartenmacherei\RestFramework\Request\Body\Body;
-use Kartenmacherei\RestFramework\Request\Body\EmptyBody;
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
@@ -12,7 +11,6 @@ use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
-use Kartenmacherei\RestFramework\Response\Content\ContentType;
 
 class Request
 {
