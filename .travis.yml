@@ -14,11 +14,6 @@ script: phpunit
 
 php:
   - 7.0
-  - hhvm
-
-matrix:
-  allow_failures:
-    - php: hhvm
 
 notifications:
   email: false
