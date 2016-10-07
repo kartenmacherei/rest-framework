@@ -55,7 +55,7 @@ As long as the code is not publicly available, you'll also need to add a link to
         {
             "type": "vcs",
             "url":  "git@bitbucket.org:kartenmacherei/rest-framework.git"
-        },
+        }
     ]
 ```
 
