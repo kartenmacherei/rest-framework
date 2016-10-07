@@ -9,6 +9,7 @@ use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocatorChain;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequestHandler;
 use Kartenmacherei\RestFramework\Response\OptionsResponse;
@@ -57,26 +58,29 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
     {
         $supportedMethods = [new GetRequestMethod(), new PutRequestMethod()];
 
+        $requestMethod = $this->getRequestMethodMock();
+        $requestMethod->method('isOptionsMethod')->willReturn(true);
+
         $resourceRequest = $this->getResourceRequestMock();
-        $resourceRequest->method('isOptionsRequest')->willReturn(true);
-        $resourceRequest->method('getSupportedMethods')
-            ->willReturn($supportedMethods);
+        $resourceRequest->method('getSupportedMethods')->willReturn($supportedMethods);
 
         $handler = new ResourceRequestHandler(
             $this->getCommandLocatorChainMock(), $this->getQueryLocatorChainMock()
         );
 
         $expected = new OptionsResponse($supportedMethods);
-        $actual = $handler->handle($resourceRequest);
+        $actual = $handler->handle($requestMethod, $resourceRequest);
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testHandlesReadRequest()
     {
+        $requestMethod = $this->getRequestMethodMock();
+        $requestMethod->method('isOptionsMethod')->willReturn(false);
+        $requestMethod->method('isReadMethod')->willReturn(true);
+
         $resourceRequest = $this->getResourceRequestMock();
-        $resourceRequest->method('isOptionsRequest')->willReturn(false);
-        $resourceRequest->method('isReadRequest')->willReturn(true);
 
         $query = $this->getQueryMock();
         $query->expects($this->once())->method('execute');
@@ -88,14 +92,16 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
             $this->getCommandLocatorChainMock(), $queryLocatorChain
         );
 
-        $handler->handle($resourceRequest);
+        $handler->handle($requestMethod, $resourceRequest);
     }
 
     public function testHandlesWriteRequest()
     {
+        $requestMethod = $this->getRequestMethodMock();
+        $requestMethod->method('isOptionsMethod')->willReturn(false);
+        $requestMethod->method('isReadMethod')->willReturn(false);
+
         $resourceRequest = $this->getResourceRequestMock();
-        $resourceRequest->method('isOptionsRequest')->willReturn(false);
-        $resourceRequest->method('isReadRequest')->willReturn(false);
 
         $commmand = $this->getCommandMock();
         $commmand->expects($this->once())->method('execute');
@@ -107,7 +113,7 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
             $commandLocatorChain, $this->getQueryLocatorChainMock()
         );
 
-        $handler->handle($resourceRequest);
+        $handler->handle($requestMethod, $resourceRequest);
     }
 
     /**
@@ -164,5 +170,13 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
     private function getQueryLocatorMock()
     {
         return $this->createMock(QueryLocator::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|RequestMethod
+     */
+    private function getRequestMethodMock()
+    {
+        return $this->createMock(RequestMethod::class);
     }
 }
