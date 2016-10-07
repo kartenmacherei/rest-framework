@@ -1,5 +1,9 @@
 # RESTful Server Framework
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kartenmacherei/rest-framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kartenmacherei/rest-framework/?branch=master)
+[![Build Status](https://travis-ci.org/kartenmacherei/rest-framework.svg?branch=master)](https://travis-ci.org/kartenmacherei/rest-framework)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/3eb072a0-0f58-4d39-a91d-71662adbdcd7/mini.png)](https://insight.sensiolabs.com/projects/3eb072a0-0f58-4d39-a91d-71662adbdcd7)
+
 The goal of this framework is to enable us to quickly bootstrap new RESTful Services.
 
 ## Basic Concepts
