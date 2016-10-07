@@ -11,7 +11,7 @@ use Kartenmacherei\RestFramework\Request\Uri;
 abstract class AbstractResourceRequest implements ResourceRequest
 {
     /**
-     * @var AbstractRequestMethod
+     * @var RequestMethod
      */
     private $requestMethod;
 

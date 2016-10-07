@@ -2,16 +2,17 @@
 namespace Kartenmacherei\RestFramework\Response;
 
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
+use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 
 class OptionsResponse implements Response
 {
     /**
-     * @var AbstractRequestMethod[]
+     * @var RequestMethod[]
      */
     private $supportedMethods = [];
 
     /**
-     * @param AbstractRequestMethod[] $supportedMethods
+     * @param RequestMethod[] $supportedMethods
      */
     public function __construct($supportedMethods)
     {
