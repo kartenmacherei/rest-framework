@@ -3,10 +3,14 @@ namespace Kartenmacherei\RestFramework;
 
 use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
 use Kartenmacherei\RestFramework\Request\Request;
+use Kartenmacherei\RestFramework\Request\UnauthorizedException;
+use Kartenmacherei\RestFramework\ResourceRequest\BadRequestException;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequestHandler;
+use Kartenmacherei\RestFramework\Response\BadRequestResponse;
 use Kartenmacherei\RestFramework\Response\MethodNotAllowedResponse;
 use Kartenmacherei\RestFramework\Response\NotFoundResponse;
 use Kartenmacherei\RestFramework\Response\Response;
+use Kartenmacherei\RestFramework\Response\UnauthorizedResponse;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\RouterChain;
@@ -69,16 +73,15 @@ class Framework
     {
         try {
             $resourceRequest = $this->chainRouter->route($request);
-        } catch (NoMoreRoutersException $e) {
-            return new NotFoundResponse();
-        }
-
-        try {
-            $response = $this->resourceRequestHandler->handle($resourceRequest);
+            return $this->resourceRequestHandler->handle($resourceRequest);
         } catch (NoMoreLocatorsException $e) {
             return new MethodNotAllowedResponse();
+        } catch (NoMoreRoutersException $e) {
+            return new NotFoundResponse();
+        } catch (UnauthorizedException $e) {
+            return new UnauthorizedResponse();
+        } catch (BadRequestException $e) {
+            return new BadRequestResponse($e);
         }
-
-        return $response;
     }
 }

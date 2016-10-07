@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Request;
 
 use Kartenmacherei\RestFramework\Request\Body\EmptyBody;
+use Kartenmacherei\RestFramework\Request\Header\HeaderCollection;
 use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
@@ -18,6 +19,7 @@ use PHPUnit_Framework_TestCase;
  * @covers \Kartenmacherei\RestFramework\Request\Request
  * @covers \Kartenmacherei\RestFramework\Request\Uri
  * @covers \Kartenmacherei\RestFramework\Request\Body\Body
+ * @covers \Kartenmacherei\RestFramework\Request\Header\HeaderCollection
  */
 class RequestTest extends PHPUnit_Framework_TestCase
 {
@@ -48,7 +50,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetUri()
     {
         $uri = new Uri('/foo');
-        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody());
+        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), new HeaderCollection());
 
         $this->assertSame($uri, $request->getUri());
     }

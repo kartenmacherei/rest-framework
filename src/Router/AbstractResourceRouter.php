@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
+use Kartenmacherei\RestFramework\Request\UnauthorizedException;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
 abstract class AbstractResourceRouter implements ResourceRouter
@@ -12,6 +13,19 @@ abstract class AbstractResourceRouter implements ResourceRouter
     private $next;
 
     /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @param Acl $acl
+     */
+    public function __construct(Acl $acl = null)
+    {
+        $this->acl = $acl;
+    }
+
+    /**
      * @param Request $request
      * @return ResourceRequest
      * @throws NoMoreRoutersException
@@ -19,12 +33,27 @@ abstract class AbstractResourceRouter implements ResourceRouter
     public function route(Request $request): ResourceRequest
     {
         if ($this->canRoute($request)) {
+            $this->protect($request);
             return $this->doRoute($request);
         }
         if (null !== $this->next) {
             return $this->next->route($request);
         }
         throw new NoMoreRoutersException();
+    }
+
+    /**
+     * @param Request $request
+     * @throws UnauthorizedException
+     */
+    private function protect(Request $request)
+    {
+        if (null === $this->acl) {
+            return;
+        }
+        if (!$this->acl->complies($request)) {
+            throw new UnauthorizedException();
+        }
     }
 
     /**
