@@ -1,7 +1,6 @@
 {
 	"name": "kartenmacherei/rest-framework",
 	"description": "Micro framework for creating RESTful webservices",
-	"version": "0.1.0",
 	"type": "library",
 	"keywords": ["framework", "rest", "restful", "kartenmacherei"],
 	"homepage": "https://bitbucket.org/kartenmacherei/rest-framework",
