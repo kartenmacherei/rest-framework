@@ -1,0 +1,24 @@
+os:
+- linux
+
+language: php
+
+before_install:
+  - composer self-update
+  - composer global require phpunit/phpunit
+
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+
+script: phpunit
+
+php:
+  - 7.0
+  - hhvm
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
+notifications:
+  email: false

@@ -12,9 +12,6 @@
     <testsuite name="Unit">
         <directory suffix="Test.php">tests/Unit</directory>
     </testsuite>
-    <testsuite name="ExampleTests">
-        <directory suffix="Test.php">example/tests</directory>
-    </testsuite>
 
     <logging>
         <log type="coverage-html" target="./build/coverage" lowUpperBound="35" highLowerBound="70"/>
