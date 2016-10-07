@@ -9,11 +9,7 @@
 	"authors": [],
 	"autoload": {
 		"psr-4": {
-			"Kartenmacherei\\RestFramework\\": "src",
-			"Kartenmacherei\\ExampleService\\": "example/src"
+			"Kartenmacherei\\RestFramework\\": "src"
 		}
-	},
-	"require": {
-		"phpunit/phpunit": "^5.5.0"
 	}
 }
