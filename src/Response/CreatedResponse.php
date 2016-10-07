@@ -1,11 +1,14 @@
 <?php
 namespace Kartenmacherei\RestFramework\Response;
 
-class CreatedResponse implements Response
+class CreatedResponse extends ContentResponse
 {
-    public function flush()
+    /**
+     * @return int
+     */
+    protected function getResponseCode(): int
     {
-        http_response_code(201);
+        return 201;
     }
 
 }

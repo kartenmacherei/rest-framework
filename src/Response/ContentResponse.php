@@ -20,10 +20,18 @@ class ContentResponse implements Response
 
     public function flush()
     {
-        http_response_code(200);
+        http_response_code($this->getResponseCode());
         header((new HttpHeader('Content-Type', $this->content->getContentType()->asString()))->asString());
 
         print($this->content->asString());
+    }
+
+    /**
+     * @return int
+     */
+    protected function getResponseCode(): int
+    {
+        return 200;
     }
 
 }
