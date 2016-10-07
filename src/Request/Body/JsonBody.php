@@ -28,6 +28,15 @@ class JsonBody extends Body
     }
 
     /**
+     * @param string $selector
+     * @return \Kartenmacherei\RestFramework\JsonArray|JsonObject
+     */
+    public function query(string $selector)
+    {
+        return $this->json->query($selector);
+    }
+
+    /**
      * @return JsonObject
      */
     public function getJson(): JsonObject
