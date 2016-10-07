@@ -6,7 +6,7 @@ class Token
     /**
      * @var string
      */
-    private $_value = '';
+    private $value = '';
 
     /**
      * @param null $value
@@ -14,18 +14,18 @@ class Token
     public function __construct($value = NULL)
     {
         if (NULL !== $value) {
-            $this->_value = $value;
+            $this->value = $value;
         } else {
-            $this->_setValue();
+            $this->setValue();
         }
     }
 
     /**
      *
      */
-    private function _setValue()
+    private function setValue()
     {
-        $this->_value = bin2hex(random_bytes(16));
+        $this->value = bin2hex(random_bytes(16));
     }
 
     /**
@@ -33,7 +33,7 @@ class Token
      */
     public function asString(): string
     {
-        return $this->_value;
+        return $this->value;
     }
 
 }
