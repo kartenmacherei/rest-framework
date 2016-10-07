@@ -24,6 +24,15 @@ class Uri
     }
 
     /**
+     * @param Uri $uri
+     * @return bool
+     */
+    public function equals(Uri $uri): bool
+    {
+        return $this->asString() === $uri->asString();
+    }
+
+    /**
      * @param Pattern $pattern
      * @return bool
      */

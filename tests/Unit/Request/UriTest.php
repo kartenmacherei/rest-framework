@@ -27,6 +27,29 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertSame('baz', $uri->getPathSegment(2));
     }
 
+    /**
+     * @dataProvider uriComparisonProvider
+     *
+     * @param string $uriValue
+     * @param string $otherUriValue
+     * @param bool $expectedResult
+     */
+    public function testEquals(string $uriValue, string $otherUriValue, bool $expectedResult)
+    {
+        $uri = new Uri($uriValue);
+        $otherUri = new Uri($otherUriValue);
+
+        $this->assertSame($expectedResult, $uri->equals($otherUri));
+    }
+
+    public static function uriComparisonProvider()
+    {
+        return [
+            ['/foo', '/bar', false],
+            ['/foo', '/foo', true],
+        ];
+    }
+
     public function testGetPathSegmentsThrowsExceptionIfIndexIsOutOfBounds()
     {
         $uri = new Uri('/foo/bar');
