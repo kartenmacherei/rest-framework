@@ -18,7 +18,7 @@ abstract class Body
         }
 
         if (!isset($_SERVER['CONTENT_TYPE'])) {
-            throw new MissingContentTypeException();
+            return new RawBody($content);
         }
 
         switch ($_SERVER['CONTENT_TYPE']) {
