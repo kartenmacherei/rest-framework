@@ -50,7 +50,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetUri()
     {
         $uri = new Uri('/foo');
-        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), new HeaderCollection());
+        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), new HeaderCollection([]));
 
         $this->assertSame($uri, $request->getUri());
     }

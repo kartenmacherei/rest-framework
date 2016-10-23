@@ -9,28 +9,31 @@ class HeaderCollection
     private $headers = [];
 
     /**
+     * @param Header[] $headers
+     */
+    public function __construct(array $headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
      * @return HeaderCollection
      */
     public static function fromSuperGlobals(): HeaderCollection
     {
-        $collection = new self();
+        $headers = [];
+
         foreach ($_SERVER as $name => $value) {
             if (strpos($name, 'HTTP_') === false) {
                 continue;
             }
-            $collection->addHeader(new Header($name, $value));
+            $headers[] = new Header($name, $value);
         }
+
+        $collection = new self($headers);
         return $collection;
     }
-
-    /**
-     * @param Header $header
-     */
-    private function addHeader(Header $header)
-    {
-        $this->headers[$header->getName()] = $header;
-    }
-
+    
     /**
      * @param string $name
      * @return bool
