@@ -71,7 +71,7 @@ $response = $framework->run($request);
 $response->flush();
 ```
 
-See `/example/src/Application` for a working example.
+See https://github.com/kartenmacherei/rest-framework-example for a working example.
 
 ## License
 
