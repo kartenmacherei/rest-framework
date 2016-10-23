@@ -3,6 +3,7 @@ namespace Kartenmacherei\RestFramework\UnitTests;
 
 use ErrorException;
 use Kartenmacherei\RestFramework\ErrorHandler;
+use Kartenmacherei\RestFramework\Exception\ExceptionToJsonRenderer;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -12,7 +13,7 @@ class ErrorHandlerTest extends PHPUnit_Framework_TestCase
 {
     public function testThrowsExceptionOnError()
     {
-        $handler = new ErrorHandler();
+        $handler = new ErrorHandler(new ExceptionToJsonRenderer());
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('Some Error');
 
@@ -28,7 +29,7 @@ class ErrorHandlerTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('XDebug extension needed');
         }
 
-        $handler = new ErrorHandler();
+        $handler = new ErrorHandler(new ExceptionToJsonRenderer());
         ob_start();
         $handler->handleException(new ErrorException('Something went wrong', 0, 1, 'somefile.php', 23));
 

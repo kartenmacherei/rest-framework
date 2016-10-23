@@ -1,16 +1,30 @@
 <?php
 namespace Kartenmacherei\RestFramework;
 
+use Kartenmacherei\RestFramework\Exception\ExceptionToJsonRenderer;
 use Throwable;
 
 class ErrorHandler
 {
     /**
+     * @var ExceptionToJsonRenderer
+     */
+    private $exceptionRenderer;
+
+    /**
+     * @param ExceptionToJsonRenderer $exceptionRenderer
+     */
+    public function __construct(ExceptionToJsonRenderer $exceptionRenderer)
+    {
+        $this->exceptionRenderer = $exceptionRenderer;
+    }
+
+    /**
      * @codeCoverageIgnore
      */
     public static function register()
     {
-        $self = new self();
+        $self = new self(new ExceptionToJsonRenderer());
         set_exception_handler([$self, 'handleException']);
         set_error_handler([$self, 'handleError']);
     }
@@ -28,21 +42,12 @@ class ErrorHandler
     }
 
     /**
-     * @param Throwable $t
+     * @param Throwable $throwable
      */
-    public function handleException(Throwable $t)
+    public function handleException(Throwable $throwable)
     {
         http_response_code(500);
         header('Content-Type: application/json');
-        print(
-            json_encode(
-                [
-                    'class' => get_class($t),
-                    'message' => $t->getMessage(),
-                    'file' => $t->getFile(),
-                    'line' => $t->getLine()
-                ]
-            )
-        );
+        print($this->exceptionRenderer->toJson($throwable));
     }
 }
