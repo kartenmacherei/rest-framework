@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/kartenmacherei/rest-framework.svg?branch=master)](https://travis-ci.org/kartenmacherei/rest-framework)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/3eb072a0-0f58-4d39-a91d-71662adbdcd7/mini.png)](https://insight.sensiolabs.com/projects/3eb072a0-0f58-4d39-a91d-71662adbdcd7)
 
-The goal of this framework is to enable us to quickly bootstrap new RESTful Services.
+The goal of this framework is to enable us to quickly bootstrap new RESTful Services while sticking to our very strict coding guidelines. This especially means that any kind of magic should be avoided. 
 
 ## Basic Concepts
 
