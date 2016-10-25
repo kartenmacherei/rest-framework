@@ -11,7 +11,7 @@ class HeaderCollection
     /**
      * @param Header[] $headers
      */
-    public function __construct(array $headers)
+    private function __construct(array $headers)
     {
         $this->headers = $headers;
     }
@@ -27,7 +27,7 @@ class HeaderCollection
             if (strpos($name, 'HTTP_') === false) {
                 continue;
             }
-            $headers[] = new Header($name, $value);
+            $headers[$name] = new Header($name, $value);
         }
 
         $collection = new self($headers);
