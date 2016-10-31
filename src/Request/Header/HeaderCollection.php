@@ -30,8 +30,7 @@ class HeaderCollection
             $headers[$name] = new Header($name, $value);
         }
 
-        $collection = new self($headers);
-        return $collection;
+        return new self($headers);
     }
     
     /**

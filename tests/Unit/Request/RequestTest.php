@@ -50,7 +50,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetUri()
     {
         $uri = new Uri('/foo');
-        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), new HeaderCollection([]));
+        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), $this->getHeaderCollectionMock());
 
         $this->assertSame($uri, $request->getUri());
     }
@@ -68,5 +68,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
             [RequestMethod::POST, PostRequestMethod::class],
             [RequestMethod::PUT, PutRequestMethod::class]
         ];
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|HeaderCollection
+     */
+    private function getHeaderCollectionMock()
+    {
+        return $this->createMock(HeaderCollection::class);
     }
 }
