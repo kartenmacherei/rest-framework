@@ -48,15 +48,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
      */
     private function protect(Request $request)
     {
-        if (null === $this->acl) {
-            return;
-        }
-
-        /**
-         * @TODO add reference to GitHub issue explaining the OPTIONS problem
-         */
-        if ($request->getMethod()->isOptionsMethod())
-        {
+        if (null === $this->acl || $request->getMethod()->isOptionsMethod()) {
             return;
         }
 
