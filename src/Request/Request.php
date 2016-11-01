@@ -54,6 +54,14 @@ class Request
     }
 
     /**
+     * @return bool
+     */
+    public function isOptionsRequest(): bool
+    {
+        return $this->requestMethod->isOptionsMethod();
+    }
+
+    /**
      * @return Request
      * @throws UnsupportedRequestMethodException
      */

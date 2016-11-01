@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests;
 
+use Kartenmacherei\RestFramework\JsonException;
 use Kartenmacherei\RestFramework\JsonObject;
 use Kartenmacherei\RestFramework\JsonArray;
 
@@ -20,6 +21,13 @@ class JsonObjectTest extends \PHPUnit_Framework_TestCase
         $actual = $json->query('foo');
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testThrowsExceptionIfSelectedPropertyDoesNotExist()
+    {
+        $json = new JsonObject(json_decode('{"foo": "bar"}'));
+        $this->expectException(JsonException::class);
+        $json->query('baz');
     }
 
     public function dataProvider()

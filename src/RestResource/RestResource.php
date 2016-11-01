@@ -24,6 +24,6 @@ abstract class RestResource
         ];
 
         $implementedInterfaces = class_implements($this);
-        return array_intersect_key($methodMap, $implementedInterfaces);
+        return array_values(array_intersect_key($methodMap, $implementedInterfaces));
     }
 }

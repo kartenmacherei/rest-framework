@@ -15,4 +15,10 @@ class OptionsRequestMethodTest extends PHPUnit_Framework_TestCase
         $requestMethod = new OptionsRequestMethod();
         $this->assertSame(RequestMethod::OPTIONS, $requestMethod->asString());
     }
+
+    public function testIsOptionsMethod()
+    {
+        $method = new OptionsRequestMethod();
+        $this->assertTrue($method->isOptionsMethod());
+    }
 }

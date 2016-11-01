@@ -21,7 +21,8 @@ interface RequestMethod
      */
     public function asString(): string;
 
-    public function isReadMethod(): bool;
-
+    /**
+     * @return bool
+     */
     public function isOptionsMethod(): bool;
 }

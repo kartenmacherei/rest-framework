@@ -25,6 +25,12 @@ class AbstractRequestMethodTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($requestMethod->equals($otherRequestMethod));
     }
 
+    public function testIsOptionsRequest()
+    {
+        $requestMethod = $this->getAbstractRequestMethod();
+        $this->assertFalse($requestMethod->isOptionsMethod());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|AbstractRequestMethod
      */

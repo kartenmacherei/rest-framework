@@ -12,4 +12,12 @@ class Factory
     {
         return new RouterChain();
     }
+
+    /**
+     * @return ActionMapper
+     */
+    public function createActionMapper(): ActionMapper
+    {
+        return new ActionMapper();
+    }
 }

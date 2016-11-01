@@ -11,6 +11,11 @@
 			"Kartenmacherei\\RestFramework\\": "src"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"Kartenmacherei\\RestFramework\\UnitTests\\": "tests/Unit"
+		}
+	},
 	"require": {
 		"php" : ">=7.0.0"
 	}

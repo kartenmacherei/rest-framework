@@ -15,18 +15,8 @@ abstract class AbstractRequestMethod implements RequestMethod
     /**
      * @return bool
      */
-    public function isReadMethod(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
     public function isOptionsMethod(): bool
     {
         return false;
     }
-
-
 }
