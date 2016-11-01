@@ -12,11 +12,17 @@ class JsonBody extends Body
     private $json = [];
 
     /**
+     * @var string
+     */
+    private $jsonString = '';
+
+    /**
      * @param string $jsonString
      */
     public function __construct($jsonString)
     {
         $this->json = $this->decode($jsonString);
+        $this->jsonString = $jsonString;
     }
 
     /**
@@ -42,6 +48,14 @@ class JsonBody extends Body
     public function getJson(): JsonObject
     {
         return $this->json;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEncodedString(): string
+    {
+        return $this->jsonString;
     }
 
     /**
