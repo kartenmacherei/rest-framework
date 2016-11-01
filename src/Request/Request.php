@@ -13,6 +13,7 @@ use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
+use Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection;
 use Kartenmacherei\RestFramework\ResourceRequest\BadRequestException;
 use Kartenmacherei\RestFramework\Token;
 
@@ -40,17 +41,30 @@ class Request
     private $headers;
 
     /**
+     * @var UploadedFilesCollection
+     */
+    private $uploadedFiles;
+
+    /**
      * @param AbstractRequestMethod $requestMethod
      * @param Uri $uri
      * @param Body $body
      * @param HeaderCollection $headers
+     * @param UploadedFilesCollection $uploadedFiles
      */
-    public function __construct(AbstractRequestMethod $requestMethod, Uri $uri, Body $body, HeaderCollection $headers)
+    public function __construct(
+        AbstractRequestMethod $requestMethod,
+        Uri $uri,
+        Body $body,
+        HeaderCollection $headers,
+        UploadedFilesCollection $uploadedFiles
+    )
     {
         $this->requestMethod = $requestMethod;
         $this->uri = $uri;
         $this->body = $body;
         $this->headers = $headers;
+        $this->uploadedFiles = $uploadedFiles;
     }
 
     /**
@@ -72,20 +86,21 @@ class Request
 
         $body = Body::fromSuperGlobals();
         $headers = HeaderCollection::fromSuperGlobals();
+        $uploadedFiles = UploadedFilesCollection::fromSuperGlobals();
 
         switch ($method) {
             case RequestMethod::OPTIONS:
-                return new self(new OptionsRequestMethod(), $uri, $body, $headers);
+                return new self(new OptionsRequestMethod(), $uri, $body, $headers, $uploadedFiles);
             case RequestMethod::DELETE:
-                return new self(new DeleteRequestMethod(), $uri, $body, $headers);
+                return new self(new DeleteRequestMethod(), $uri, $body, $headers, $uploadedFiles);
             case RequestMethod::GET:
-                return new self(new GetRequestMethod(), $uri, $body, $headers);
+                return new self(new GetRequestMethod(), $uri, $body, $headers, $uploadedFiles);
             case RequestMethod::PATCH:
-                return new self(new PatchRequestMethod(), $uri, $body, $headers);
+                return new self(new PatchRequestMethod(), $uri, $body, $headers, $uploadedFiles);
             case RequestMethod::POST:
-                return new self(new PostRequestMethod(), $uri, $body, $headers);
+                return new self(new PostRequestMethod(), $uri, $body, $headers, $uploadedFiles);
             case RequestMethod::PUT:
-                return new self(new PutRequestMethod(), $uri, $body, $headers);
+                return new self(new PutRequestMethod(), $uri, $body, $headers, $uploadedFiles);
         }
 
         throw new UnsupportedRequestMethodException(
@@ -115,6 +130,14 @@ class Request
     public function getMethod(): RequestMethod
     {
         return $this->requestMethod;
+    }
+
+    /**
+     * @return UploadedFilesCollection
+     */
+    public function getUploadedFiles(): UploadedFilesCollection
+    {
+        return $this->uploadedFiles;
     }
 
     /**

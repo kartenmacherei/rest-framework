@@ -12,6 +12,7 @@ use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 use Kartenmacherei\RestFramework\Request\Request;
+use Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection;
 use Kartenmacherei\RestFramework\Request\Uri;
 use PHPUnit_Framework_TestCase;
 
@@ -20,6 +21,7 @@ use PHPUnit_Framework_TestCase;
  * @covers \Kartenmacherei\RestFramework\Request\Uri
  * @covers \Kartenmacherei\RestFramework\Request\Body\Body
  * @covers \Kartenmacherei\RestFramework\Request\Header\HeaderCollection
+ * @covers \Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection
  */
 class RequestTest extends PHPUnit_Framework_TestCase
 {
@@ -50,7 +52,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetUri()
     {
         $uri = new Uri('/foo');
-        $request = new Request(new GetRequestMethod(), $uri, new EmptyBody(), $this->getHeaderCollectionMock());
+        $request = new Request(
+            new GetRequestMethod(),
+            $uri,
+            new EmptyBody(),
+            $this->getHeaderCollectionMock(),
+            $this->getUploadedFilesCollectionMock()
+        );
 
         $this->assertSame($uri, $request->getUri());
     }
@@ -76,5 +84,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
     private function getHeaderCollectionMock()
     {
         return $this->createMock(HeaderCollection::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|UploadedFilesCollection
+     */
+    private function getUploadedFilesCollectionMock()
+    {
+        return $this->createMock(UploadedFilesCollection::class);
     }
 }
