@@ -6,18 +6,18 @@ use Kartenmacherei\RestFramework\Response\Content\ContentType;
 abstract class Body
 {
     /**
+     * @param string $inputStream
      * @return Body|JsonBody
-     * @throws MissingContentTypeException
      * @throws UnsupportedRequestBodyException
      */
-    public static function fromSuperGlobals(): Body
+    public static function fromSuperGlobals(string $inputStream = 'php://input'): Body
     {
-        $content = file_get_contents('php://input');
+        $content = file_get_contents($inputStream);
         if (empty($content)) {
             return new EmptyBody();
         }
 
-        if (!isset($_SERVER['CONTENT_TYPE'])) {
+        if (!isset($_SERVER['CONTENT_TYPE']) || empty($_SERVER['CONTENT_TYPE'])) {
             return new RawBody($content);
         }
 
