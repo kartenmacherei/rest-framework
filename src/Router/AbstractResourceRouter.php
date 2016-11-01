@@ -3,7 +3,7 @@ namespace Kartenmacherei\RestFramework\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UnauthorizedException;
-use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
+use Kartenmacherei\RestFramework\RestResource\RestResource;
 
 abstract class AbstractResourceRouter implements ResourceRouter
 {
@@ -27,10 +27,10 @@ abstract class AbstractResourceRouter implements ResourceRouter
 
     /**
      * @param Request $request
-     * @return ResourceRequest
+     * @return RestResource
      * @throws NoMoreRoutersException
      */
-    public function route(Request $request): ResourceRequest
+    public function route(Request $request): RestResource
     {
         if ($this->canRoute($request)) {
             $this->protect($request);
@@ -51,6 +51,15 @@ abstract class AbstractResourceRouter implements ResourceRouter
         if (null === $this->acl) {
             return;
         }
+
+        /**
+         * @TODO add reference to GitHub issue explaining the OPTIONS problem
+         */
+        if ($request->getMethod()->isOptionsMethod())
+        {
+            return;
+        }
+
         if (!$this->acl->complies($request)) {
             throw new UnauthorizedException();
         }
@@ -72,7 +81,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
 
     /**
      * @param Request $request
-     * @return ResourceRequest
+     * @return RestResource
      */
-    abstract protected function doRoute(Request $request): ResourceRequest;
+    abstract protected function doRoute(Request $request): RestResource;
 }

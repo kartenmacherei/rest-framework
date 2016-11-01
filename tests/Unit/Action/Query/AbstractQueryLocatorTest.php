@@ -3,7 +3,7 @@ namespace Kartenmacherei\RestFramework\UnitTests\Action\Query;
 
 use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
 use Kartenmacherei\RestFramework\Action\Query\AbstractQueryLocator;
-use Kartenmacherei\RestFramework\Action\Query\Query;
+use Kartenmacherei\RestFramework\Action\Query;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 use PHPUnit_Framework_MockObject_MockObject;

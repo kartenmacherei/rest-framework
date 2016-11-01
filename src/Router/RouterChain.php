@@ -2,7 +2,7 @@
 namespace Kartenmacherei\RestFramework\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
-use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
+use Kartenmacherei\RestFramework\RestResource\RestResource;
 
 class RouterChain
 {
@@ -33,10 +33,10 @@ class RouterChain
 
     /**
      * @param Request $request
-     * @return ResourceRequest
+     * @return RestResource
      * @throws NoMoreRoutersException
      */
-    public function route(Request $request): ResourceRequest
+    public function route(Request $request): RestResource
     {
         if (null === $this->first) {
             throw new NoMoreRoutersException();

@@ -1,10 +1,10 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests\ResourceRequest;
 
-use Kartenmacherei\RestFramework\Action\Command\Command;
+use Kartenmacherei\RestFramework\Action\Command;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocator;
 use Kartenmacherei\RestFramework\Action\Command\CommandLocatorChain;
-use Kartenmacherei\RestFramework\Action\Query\Query;
+use Kartenmacherei\RestFramework\Action\Query;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocator;
 use Kartenmacherei\RestFramework\Action\Query\QueryLocatorChain;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
@@ -32,10 +32,10 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
             ->with($queryLocator);
 
         $handler = new ResourceRequestHandler(
-            $this->getCommandLocatorChainMock(), $queryLocatorChain
+            $queryLocatorChain
         );
 
-        $handler->registerQueryLocator($queryLocator);
+        $handler->registerActionLocator($queryLocator);
     }
 
     public function testRegistersCommandLocator()
@@ -48,7 +48,7 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
             ->with($commandLocator);
 
         $handler = new ResourceRequestHandler(
-            $commandLocatorChain, $this->getQueryLocatorChainMock()
+            $this->getQueryLocatorChainMock()
         );
 
         $handler->registerCommandLocator($commandLocator);
@@ -65,7 +65,7 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
         $resourceRequest->method('getSupportedMethods')->willReturn($supportedMethods);
 
         $handler = new ResourceRequestHandler(
-            $this->getCommandLocatorChainMock(), $this->getQueryLocatorChainMock()
+            $this->getQueryLocatorChainMock()
         );
 
         $expected = new OptionsResponse($supportedMethods);
@@ -89,7 +89,7 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
         $queryLocatorChain->method('getQuery')->willReturn($query);
 
         $handler = new ResourceRequestHandler(
-            $this->getCommandLocatorChainMock(), $queryLocatorChain
+            $queryLocatorChain
         );
 
         $handler->handle($requestMethod, $resourceRequest);
@@ -110,7 +110,7 @@ class ResourceRequestHandlerTest extends PHPUnit_Framework_TestCase
         $commandLocatorChain->method('getCommand')->willReturn($commmand);
 
         $handler = new ResourceRequestHandler(
-            $commandLocatorChain, $this->getQueryLocatorChainMock()
+            $this->getQueryLocatorChainMock()
         );
 
         $handler->handle($requestMethod, $resourceRequest);

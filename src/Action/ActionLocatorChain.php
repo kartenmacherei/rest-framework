@@ -1,25 +1,24 @@
 <?php
-namespace Kartenmacherei\RestFramework\Action\Query;
+namespace Kartenmacherei\RestFramework\Action;
 
-use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 
-class QueryLocatorChain
+class ActionLocatorChain
 {
     /**
-     * @var QueryLocator
+     * @var ActionLocator
      */
     private $first;
 
     /**
-     * @var QueryLocator
+     * @var ActionLocator
      */
     private $last;
 
     /**
-     * @param QueryLocator $locator
+     * @param ActionLocator $locator
      */
-    public function addQueryLocator(QueryLocator $locator)
+    public function addActionLocator(ActionLocator $locator)
     {
         if (null === $this->first) {
             $this->first = $locator;
@@ -32,15 +31,15 @@ class QueryLocatorChain
 
     /**
      * @param ResourceRequest $resourceRequest
-     * @return Query
+     * @return Action
      * @throws NoMoreLocatorsException
      */
-    public function getQuery(ResourceRequest $resourceRequest): Query
+    public function getAction(ResourceRequest $resourceRequest): Action
     {
         if (null === $this->first) {
             throw new NoMoreLocatorsException();
         }
-        return $this->first->getQuery($resourceRequest);
+        return $this->first->getAction($resourceRequest);
     }
 
 }

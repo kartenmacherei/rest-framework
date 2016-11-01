@@ -32,7 +32,7 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
     {
         $routerChain = $this->getRouterChainMock();
         $routerChain->method('route')->willThrowException(new NoMoreRoutersException());
-        $framework = new Framework($routerChain, $this->getResourceRequestHandlerMock());
+        $framework = new Framework($routerChain);
 
         $this->assertInstanceOf(NotFoundResponse::class, $framework->run($this->getRequestMock()));
     }
@@ -45,7 +45,7 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
         $requestHandler = $this->getResourceRequestHandlerMock();
         $requestHandler->method('handle')->willThrowException(new NoMoreLocatorsException());
 
-        $framework = new Framework($routerChain, $requestHandler);
+        $framework = new Framework($routerChain);
 
         $this->assertInstanceOf(MethodNotAllowedResponse::class, $framework->run($this->getRequestMock()));
     }
@@ -60,7 +60,7 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
         $requestHandler = $this->getResourceRequestHandlerMock();
         $requestHandler->method('handle')->willReturn($response);
 
-        $framework = new Framework($routerChain, $requestHandler);
+        $framework = new Framework($routerChain);
 
         $this->assertSame($response, $framework->run($this->getRequestMock()));
     }
@@ -74,9 +74,9 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
         $routerChain = $this->getRouterChainMock();
         $routerChain->expects($this->once())->method('addRouter')->with($this->identicalTo($router));
 
-        $framework = new Framework($routerChain, $this->getResourceRequestHandlerMock());
+        $framework = new Framework($routerChain);
 
-        $framework->registerResource($restResource);
+        $framework->registerResourceRouter($restResource);
     }
 
     public function testRegisterResourceAddsCommandLocator()
@@ -90,9 +90,9 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
         $requestHandler = $this->getResourceRequestHandlerMock();
         $requestHandler->expects($this->once())->method('registerCommandLocator')->with($this->identicalTo($commandLocator));
 
-        $framework = new Framework($this->getRouterChainMock(), $requestHandler);
+        $framework = new Framework($this->getRouterChainMock());
 
-        $framework->registerResource($restResource);
+        $framework->registerResourceRouter($restResource);
     }    
     
     public function testRegisterResourceAddsQueryLocator()
@@ -106,9 +106,9 @@ class FrameworkTest extends \PHPUnit_Framework_TestCase
         $requestHandler = $this->getResourceRequestHandlerMock();
         $requestHandler->expects($this->once())->method('registerQueryLocator')->with($this->identicalTo($queryLocator));
 
-        $framework = new Framework($this->getRouterChainMock(), $requestHandler);
+        $framework = new Framework($this->getRouterChainMock());
 
-        $framework->registerResource($restResource);
+        $framework->registerResourceRouter($restResource);
     }
 
     /**

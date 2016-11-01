@@ -2,15 +2,15 @@
 namespace Kartenmacherei\RestFramework\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
-use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
+use Kartenmacherei\RestFramework\RestResource\RestResource;
 
 interface ResourceRouter
 {
     /**
      * @param Request $request
-     * @return ResourceRequest
+     * @return RestResource
      */
-    public function route(Request $request): ResourceRequest;
+    public function route(Request $request): RestResource;
 
     /**
      * @param ResourceRouter $router
