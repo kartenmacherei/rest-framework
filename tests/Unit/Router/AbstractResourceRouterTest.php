@@ -2,7 +2,7 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
-use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
+use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\AbstractResourceRouter;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
@@ -24,18 +24,18 @@ class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsResourceRequest()
     {
-        $resourceRequest = $this->getResourceRequestMock();
+        $restResource = $this->getRestResourceMock();
 
         $router = $this->getAbstractRouter();
         $router->method('canRoute')->willReturn(true);
-        $router->method('doRoute')->willReturn($resourceRequest);
+        $router->method('doRoute')->willReturn($restResource);
 
-        $this->assertSame($resourceRequest, $router->route($this->getRequestMock()));
+        $this->assertSame($restResource, $router->route($this->getRequestMock()));
     }
 
     public function testHandsRequestToNextRouterAndReturnsResult()
     {
-        $resourceRequest = $this->getResourceRequestMock();
+        $restResource = $this->getRestResourceMock();
 
         $request = $this->getRequestMock();
 
@@ -43,13 +43,13 @@ class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
         $nextRouter->expects($this->once())
             ->method('route')
             ->with($request)
-            ->willReturn($resourceRequest);
+            ->willReturn($restResource);
 
         $router = $this->getAbstractRouter();
         $router->method('canRoute')->willReturn(false);
         $router->setNext($nextRouter);
 
-        $this->assertSame($resourceRequest, $router->route($request));
+        $this->assertSame($restResource, $router->route($request));
     }
 
     /**
@@ -61,11 +61,11 @@ class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRequest
+     * @return PHPUnit_Framework_MockObject_MockObject|RestResource
      */
-    private function getResourceRequestMock()
+    private function getRestResourceMock()
     {
-        return $this->createMock(ResourceRequest::class);
+        return $this->createMock(RestResource::class);
     }
 
     /**

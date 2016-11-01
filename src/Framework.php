@@ -2,7 +2,6 @@
 namespace Kartenmacherei\RestFramework;
 
 use Kartenmacherei\RestFramework\Action\Action;
-use Kartenmacherei\RestFramework\Action\NoMoreLocatorsException;
 use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
@@ -74,8 +73,6 @@ class Framework
                 return new OptionsResponse($resource->getSupportedMethods());
             }
             return $this->getAction($request->getMethod(), $resource)->execute();
-        } catch (NoMoreLocatorsException $e) {
-            return new MethodNotAllowedResponse();
         } catch (NoMoreRoutersException $e) {
             return new NotFoundResponse();
         } catch (UnauthorizedException $e) {
@@ -93,7 +90,6 @@ class Framework
      */
     private function getAction(RequestMethod $requestMethod, RestResource $resource): Action
     {
-
         switch ($requestMethod) {
             case new DeleteRequestMethod():
                 if (!$resource instanceof SupportsDeleteRequests) {

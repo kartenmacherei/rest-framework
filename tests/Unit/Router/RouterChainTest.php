@@ -3,6 +3,7 @@ namespace Kartenmacherei\RestFramework\UnitTests\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
+use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
@@ -23,18 +24,19 @@ class RouterChainTest extends PHPUnit_Framework_TestCase
 
     public function testHandsRequestToFirstRouter()
     {
-        $resourceRequest = $this->getResourceRequestMock();
+        $resource = $this->getRestResourceMock();
+
         $request = $this->getRequestMock();
         $router = $this->getRouterMock();
         $router->expects($this->once())
             ->method('route')
             ->with($request)
-            ->willReturn($resourceRequest);
+            ->willReturn($resource);
 
         $chain = new RouterChain();
         $chain->addRouter($router);
 
-        $this->assertSame($resourceRequest, $chain->route($request));
+        $this->assertSame($resource, $chain->route($request));
     }
 
     public function testAddsRouterToPreviousRouterInChain()
@@ -47,14 +49,6 @@ class RouterChainTest extends PHPUnit_Framework_TestCase
         $chain = new RouterChain($this->getRequestMock());
         $chain->addRouter($router1);
         $chain->addRouter($router2);
-    }
-
-    /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRequest
-     */
-    private function getResourceRequestMock()
-    {
-        return $this->createMock(ResourceRequest::class);
     }
 
     /**
@@ -71,5 +65,13 @@ class RouterChainTest extends PHPUnit_Framework_TestCase
     private function getRequestMock()
     {
         return $this->createMock(Request::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|RestResource
+     */
+    private function getRestResourceMock()
+    {
+        return $this->createMock(RestResource::class);
     }
 }
