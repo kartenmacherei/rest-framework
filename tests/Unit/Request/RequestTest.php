@@ -1,16 +1,15 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests\Request;
 
-use Kartenmacherei\RestFramework\Request\Body\EmptyBody;
+use Kartenmacherei\RestFramework\Request\DeleteRequest;
+use Kartenmacherei\RestFramework\Request\GetRequest;
 use Kartenmacherei\RestFramework\Request\Header\HeaderCollection;
-use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
+use Kartenmacherei\RestFramework\Request\OptionsRequest;
+use Kartenmacherei\RestFramework\Request\PatchRequest;
+use Kartenmacherei\RestFramework\Request\PostRequest;
+use Kartenmacherei\RestFramework\Request\PutRequest;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection;
 use Kartenmacherei\RestFramework\Request\Uri;
@@ -18,6 +17,8 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Request
+ * @covers \Kartenmacherei\RestFramework\Request\GetRequest
+ * @covers \Kartenmacherei\RestFramework\Request\PostRequest
  * @covers \Kartenmacherei\RestFramework\Request\Uri
  * @covers \Kartenmacherei\RestFramework\Request\Body\Body
  * @covers \Kartenmacherei\RestFramework\Request\Header\HeaderCollection
@@ -31,13 +32,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param string $method
      * @param string $expectedClass
      */
-    public function testFromSuperGlobalsCreatesInstanceWithExpectedRequestMethod($method, $expectedClass)
+    public function testFromSuperGlobalsCreatesExpectedRequest($method, $expectedClass)
     {
         $_SERVER['REQUEST_URI'] = '/foo';
         $_SERVER['REQUEST_METHOD'] = $method;
 
         $request = Request::fromSuperGlobals();
-        $this->assertInstanceOf($expectedClass, $request->getMethod());
+        $this->assertInstanceOf($expectedClass, $request);
     }
 
     public function testFromSuperGlobalsThrowsExceptionWhenRequestMethodIsNotSupported()
@@ -52,13 +53,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetUri()
     {
         $uri = new Uri('/foo');
-        $request = new Request(
-            new GetRequestMethod(),
-            $uri,
-            new EmptyBody(),
-            $this->getHeaderCollectionMock(),
-            $this->getUploadedFilesCollectionMock()
-        );
+        $request = $this->getAbstractRequest($uri);
 
         $this->assertSame($uri, $request->getUri());
     }
@@ -69,13 +64,22 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public static function methodProvider()
     {
         return [
-            [RequestMethod::OPTIONS, OptionsRequestMethod::class],
-            [RequestMethod::GET, GetRequestMethod::class],
-            [RequestMethod::DELETE, DeleteRequestMethod::class],
-            [RequestMethod::PATCH, PatchRequestMethod::class],
-            [RequestMethod::POST, PostRequestMethod::class],
-            [RequestMethod::PUT, PutRequestMethod::class]
+            [RequestMethod::OPTIONS, OptionsRequest::class],
+            [RequestMethod::GET, GetRequest::class],
+            [RequestMethod::DELETE, DeleteRequest::class],
+            [RequestMethod::PATCH, PatchRequest::class],
+            [RequestMethod::POST, PostRequest::class],
+            [RequestMethod::PUT, PutRequest::class]
         ];
+    }
+
+    /**
+     * @param Uri $uri
+     * @return Request|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getAbstractRequest(Uri $uri)
+    {
+        return $this->getMockForAbstractClass(Request::class, [$uri, $this->getHeaderCollectionMock()]);
     }
 
     /**

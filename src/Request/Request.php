@@ -4,27 +4,15 @@ namespace Kartenmacherei\RestFramework\Request;
 use Kartenmacherei\RestFramework\Request\Body\Body;
 use Kartenmacherei\RestFramework\Request\Header\Header;
 use Kartenmacherei\RestFramework\Request\Header\HeaderCollection;
-use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\OptionsRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 use Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection;
 use Kartenmacherei\RestFramework\ResourceRequest\BadRequestException;
 use Kartenmacherei\RestFramework\Token;
 
-class Request
+abstract class Request
 {
     const AUTHORIZATION_HEADER_NAME = 'HTTP_AUTHORIZATION';
-
-    /**
-     * @var AbstractRequestMethod
-     */
-    private $requestMethod;
 
     /**
      * @var Uri
@@ -32,39 +20,18 @@ class Request
     private $uri;
 
     /**
-     * @var Body
-     */
-    private $body;
-    /**
      * @var HeaderCollection
      */
     private $headers;
 
     /**
-     * @var UploadedFilesCollection
-     */
-    private $uploadedFiles;
-
-    /**
-     * @param AbstractRequestMethod $requestMethod
      * @param Uri $uri
-     * @param Body $body
      * @param HeaderCollection $headers
-     * @param UploadedFilesCollection $uploadedFiles
      */
-    public function __construct(
-        AbstractRequestMethod $requestMethod,
-        Uri $uri,
-        Body $body,
-        HeaderCollection $headers,
-        UploadedFilesCollection $uploadedFiles
-    )
+    public function __construct(Uri $uri, HeaderCollection $headers)
     {
-        $this->requestMethod = $requestMethod;
         $this->uri = $uri;
-        $this->body = $body;
         $this->headers = $headers;
-        $this->uploadedFiles = $uploadedFiles;
     }
 
     /**
@@ -72,8 +39,13 @@ class Request
      */
     public function isOptionsRequest(): bool
     {
-        return $this->requestMethod->isOptionsMethod();
+        return false;
     }
+
+    /**
+     * @return RequestMethod
+     */
+    abstract public function getMethod(): RequestMethod;
 
     /**
      * @return Request
@@ -90,30 +62,20 @@ class Request
 
         switch ($method) {
             case RequestMethod::OPTIONS:
-                return new self(new OptionsRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new OptionsRequest($uri, $headers);
             case RequestMethod::DELETE:
-                return new self(new DeleteRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new DeleteRequest($uri, $headers, $_GET);
             case RequestMethod::GET:
-                return new self(new GetRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new GetRequest($uri, $headers, $_GET);
             case RequestMethod::PATCH:
-                return new self(new PatchRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new PatchRequest($uri, $headers, $body, $uploadedFiles);
             case RequestMethod::POST:
-                return new self(new PostRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new PostRequest($uri, $headers, $body, $uploadedFiles);
             case RequestMethod::PUT:
-                return new self(new PutRequestMethod(), $uri, $body, $headers, $uploadedFiles);
+                return new PutRequest($uri, $headers, $body, $uploadedFiles);
         }
 
-        throw new UnsupportedRequestMethodException(
-            sprintf('Unsupported method %s', $method)
-        );
-    }
-
-    /**
-     * @return Body
-     */
-    public function getBody(): Body
-    {
-        return $this->body;
+        throw new UnsupportedRequestMethodException(sprintf('Unsupported method %s', $method));
     }
 
     /**
@@ -125,26 +87,10 @@ class Request
     }
 
     /**
-     * @return RequestMethod
-     */
-    public function getMethod(): RequestMethod
-    {
-        return $this->requestMethod;
-    }
-
-    /**
-     * @return UploadedFilesCollection
-     */
-    public function getUploadedFiles(): UploadedFilesCollection
-    {
-        return $this->uploadedFiles;
-    }
-
-    /**
      * @param string $name
      * @return bool
      */
-    private function hasHeader(string $name): bool
+    protected function hasHeader(string $name): bool
     {
         return $this->headers->has($name);
     }
@@ -153,7 +99,7 @@ class Request
      * @param string $name
      * @return Header
      */
-    private function getHeader(string $name): Header
+    protected function getHeader(string $name): Header
     {
         return $this->headers->get($name);
     }

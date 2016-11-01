@@ -48,7 +48,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
      */
     private function protect(Request $request)
     {
-        if (null === $this->acl || $request->getMethod()->isOptionsMethod()) {
+        if (null === $this->acl || $request->isOptionsRequest()) {
             return;
         }
 
