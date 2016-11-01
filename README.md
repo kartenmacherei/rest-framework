@@ -12,18 +12,13 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 
 ### RestResource
 
-- Returns a `Router` that determines if a given `URL` matches this `RestResource`
-- Returns a `QueryLocator` and / or a `CommandLocator` 
+- Supports HTTP verbs by implementing interfaces like `SupportsGetRequests`
+- Returns `Action` objects through explicit methods like `getPostCommand()` or `getQuery()` 
 
-### ResourceRequest
+### ResourceRouter
 
-- Describes the request against a specific resource
-- Returns a list of supported request methods
-- Returns the request method
-
-### Router
-
-- Returns a `ResourceRequest` based on a given `URL` 
+- Determines if it is responsible for routing a given URL in `canRoute()`
+- Returns a `RestResource` in `doRoute()`
 
 ### Command
 
@@ -32,12 +27,6 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 ### Query
 
 - Does not change the state of a resource and only returns existing data.
-
-### Request 
-
-
-
-### Response
 
 ## Using the Framework
 
@@ -61,8 +50,8 @@ $request = Request::fromSuperGlobals();
 // create a new instance of the framework
 $framework = Framework::createInstance();
 
-// register a RestResource
-$framework->registerResource(new ReadOnlyRestResource(new BasketRouter(), new BasketQueryLocator()));
+// register a RestResource Router
+$framework->registerResourceRouter(new BasketResourceRouter());
 
 // let the framework process the request
 $response = $framework->run($request);
