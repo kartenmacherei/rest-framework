@@ -3,14 +3,16 @@ namespace Kartenmacherei\RestFramework\UnitTests\Request\Body;
 
 use Kartenmacherei\RestFramework\Request\Body\Body;
 use Kartenmacherei\RestFramework\Request\Body\EmptyBody;
+use Kartenmacherei\RestFramework\Request\Body\FormDataBody;
 use Kartenmacherei\RestFramework\Request\Body\JsonBody;
 use Kartenmacherei\RestFramework\Request\Body\RawBody;
 use Kartenmacherei\RestFramework\Request\Body\UnsupportedRequestBodyException;
 use Kartenmacherei\RestFramework\Response\Content\ContentType;
-use Kartenmacherei\RestFramework\Response\Content\UnsupportedContentTypeException;
 
 /**
+ * @backupGlobals enabled
  * @covers \Kartenmacherei\RestFramework\Request\Body\Body
+ * @covers \Kartenmacherei\RestFramework\Request\Body\FormDataBody
  * @covers \Kartenmacherei\RestFramework\Request\Body\RawBody
  * @covers \Kartenmacherei\RestFramework\Request\Body\JsonBody
  * @covers \Kartenmacherei\RestFramework\JsonObject
@@ -39,6 +41,13 @@ class BodyTest extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['CONTENT_TYPE'] = ContentType::JSON;
         $this->assertInstanceOf(JsonBody::class, Body::fromSuperGlobals(__DIR__  . '/fixtures/jsonBody.txt'));
+    }
+
+    public function testCreatesFormDataBody()
+    {
+        $_SERVER['CONTENT_TYPE'] = ContentType::MULTIPART_FORMDATA;
+        $_POST = ['foo' => 'bar'];
+        $this->assertInstanceOf(FormDataBody::class, Body::fromSuperGlobals());
     }
 
     public function testThrowsExceptionIfContentTypeIsNotSupported()

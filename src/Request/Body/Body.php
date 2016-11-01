@@ -13,7 +13,8 @@ abstract class Body
     public static function fromSuperGlobals(string $inputStream = 'php://input'): Body
     {
         $content = file_get_contents($inputStream);
-        if (empty($content)) {
+
+        if (empty($content) && empty($_POST)) {
             return new EmptyBody();
         }
 
@@ -24,6 +25,8 @@ abstract class Body
         switch ($_SERVER['CONTENT_TYPE']) {
             case ContentType::JSON:
                 return new JsonBody($content);
+            case ContentType::MULTIPART_FORMDATA:
+                return new FormDataBody($_POST);
         }
         throw new UnsupportedRequestBodyException();
     }

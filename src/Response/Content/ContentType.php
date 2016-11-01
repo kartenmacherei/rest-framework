@@ -3,6 +3,7 @@ namespace Kartenmacherei\RestFramework\Response\Content;
 
 abstract class ContentType
 {
+    const MULTIPART_FORMDATA = 'multipart/form-data';
     const JSON = 'application/json';
 
     /**
