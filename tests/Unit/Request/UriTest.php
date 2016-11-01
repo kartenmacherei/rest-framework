@@ -47,6 +47,7 @@ class UriTest extends PHPUnit_Framework_TestCase
         return [
             ['/foo', '/bar', false],
             ['/foo', '/foo', true],
+            ['/foo?bar=baz', '/foo', true],
         ];
     }
 

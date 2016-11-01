@@ -29,7 +29,9 @@ class Uri
      */
     public function equals(Uri $uri): bool
     {
-        return $this->asString() === $uri->asString();
+        $path = parse_url($this->asString(), PHP_URL_PATH);
+        $otherPath = parse_url($uri->asString(), PHP_URL_PATH);
+        return $path === $otherPath;
     }
 
     /**
