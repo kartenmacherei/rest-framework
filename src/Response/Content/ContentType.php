@@ -5,6 +5,7 @@ abstract class ContentType
 {
     const MULTIPART_FORMDATA = 'multipart/form-data';
     const JSON = 'application/json';
+    const PDF = 'application/pdf';
 
     /**
      * @param $type
@@ -16,6 +17,8 @@ abstract class ContentType
         switch ($type) {
             case self::JSON:
                 return new JsonContentType();
+            case self::PDF:
+                return new PdfContentType();
         }
         throw new UnsupportedContentTypeException(sprintf('Content type %s is not supported', $type));
     }

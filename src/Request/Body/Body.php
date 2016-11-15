@@ -27,6 +27,8 @@ abstract class Body
                 return new JsonBody($content);
             case ContentType::MULTIPART_FORMDATA:
                 return new FormDataBody($_POST);
+            case ContentType::PDF:
+                return new PdfBody($content);
         }
         throw new UnsupportedRequestBodyException();
     }
