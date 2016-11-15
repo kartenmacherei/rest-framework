@@ -1,9 +1,6 @@
 <?php
 namespace Kartenmacherei\RestFramework\Request\Body;
 
-use Kartenmacherei\RestFramework\EnsureException;
-use Kartenmacherei\RestFramework\JsonObject;
-
 class PdfBody extends Body
 {
     /**
