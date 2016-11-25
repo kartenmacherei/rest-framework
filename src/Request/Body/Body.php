@@ -23,7 +23,7 @@ abstract class Body
         }
 
         switch ($_SERVER['CONTENT_TYPE']) {
-            case ContentType::JSON:
+            case ContentType::JSON || ContentType::JSON_UTF8:
                 return new JsonBody($content);
             case ContentType::MULTIPART_FORMDATA:
                 return new FormDataBody($_POST);
