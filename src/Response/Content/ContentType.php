@@ -16,7 +16,8 @@ abstract class ContentType
     public static function fromString($type): ContentType
     {
         switch ($type) {
-            case self::JSON || self::JSON_UTF8:
+            case self::JSON:
+            case self::JSON_UTF8:
                 return new JsonContentType();
             case self::PDF:
                 return new PdfContentType();
