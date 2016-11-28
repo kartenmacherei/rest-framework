@@ -5,6 +5,7 @@ abstract class ContentType
 {
     const MULTIPART_FORMDATA = 'multipart/form-data';
     const JSON = 'application/json';
+    const JSON_UTF8 = 'application/json; charset=UTF-8';
     const PDF = 'application/pdf';
 
     /**
@@ -16,6 +17,7 @@ abstract class ContentType
     {
         switch ($type) {
             case self::JSON:
+            case self::JSON_UTF8:
                 return new JsonContentType();
             case self::PDF:
                 return new PdfContentType();
