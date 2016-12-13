@@ -29,9 +29,10 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function testCallsExpectedMethodOnRestResource(RequestMethod $requestMethod, string $expectedMethod, string $actionClassname)
     {
-        $resource = $this->getRestResourceStubSupportingAllMethods();
+        $resource = $this->getRestResourceMock();
         $action = $this->createMock($actionClassname);
 
+        $resource->method('supports')->willReturn(true);
         $resource->expects($this->once())->method($expectedMethod)->willReturn($action);
 
         $mapper = new ActionMapper();
@@ -91,20 +92,12 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
             [new PutRequestMethod()]
         ];
     }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RestResourceStubSupportingAllMethods
-     */
-    private function getRestResourceStubSupportingAllMethods()
-    {
-        return $this->createMock(RestResourceStubSupportingAllMethods::class);
-    }
-
+    
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|RestResource
      */
-    private function getRestResourceMock()
+    private function getRestResourceMock()  
     {
-        return $this->createMock(RestResource::class);
+        return $this->createMock(RestResourceStubSupportingAllMethods::class);
     }
 }

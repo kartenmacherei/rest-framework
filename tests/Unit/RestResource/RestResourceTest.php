@@ -15,6 +15,23 @@ use Kartenmacherei\RestFramework\UnitTests\Stubs\RestResourceStubSupportingGetAn
 class RestResourceTest extends \PHPUnit_Framework_TestCase
 {
 
+    public function testSupportsMethodReturnsExpectedResult()
+    {
+        $resource = new RestResourceStubSupportingAllMethods();
+        $this->assertTrue($resource->supports(new DeleteRequestMethod()));
+        $this->assertTrue($resource->supports(new GetRequestMethod()));
+        $this->assertTrue($resource->supports(new PatchRequestMethod()));
+        $this->assertTrue($resource->supports(new PostRequestMethod()));
+        $this->assertTrue($resource->supports(new PutRequestMethod()));
+
+        $resource = new RestResourceStubSupportingGetAndPost();
+        $this->assertFalse($resource->supports(new DeleteRequestMethod()));
+        $this->assertTrue($resource->supports(new GetRequestMethod()));
+        $this->assertFalse($resource->supports(new PatchRequestMethod()));
+        $this->assertTrue($resource->supports(new PostRequestMethod()));
+        $this->assertFalse($resource->supports(new PutRequestMethod()));
+    }
+    
     public function testReturnsExpectedSupportedMethods()
     {
         $resource = new RestResourceStubSupportingAllMethods();

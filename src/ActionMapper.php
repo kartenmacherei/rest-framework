@@ -26,31 +26,21 @@ class ActionMapper
      */
     public function getAction(RequestMethod $requestMethod, RestResource $resource): Action
     {
+        if (!$resource->supports($requestMethod)) {
+            throw new UnsupportedRequestMethodException();
+        }
+
+        /** @var RestResource|SupportsDeleteRequests|SupportsGetRequests|SupportsPatchRequests|SupportsPostRequests|SupportsPutRequests $resource */
         switch ($requestMethod) {
             case new DeleteRequestMethod():
-                if (!$resource instanceof SupportsDeleteRequests) {
-                    throw new UnsupportedRequestMethodException();
-                }
                 return $resource->getDeleteCommand();
             case new GetRequestMethod():
-                if (!$resource instanceof SupportsGetRequests) {
-                    throw new UnsupportedRequestMethodException();
-                }
                 return $resource->getQuery();
             case new PatchRequestMethod():
-                if (!$resource instanceof SupportsPatchRequests) {
-                    throw new UnsupportedRequestMethodException();
-                }
                 return $resource->getPatchCommand();
             case new PostRequestMethod():
-                if (!$resource instanceof SupportsPostRequests) {
-                    throw new UnsupportedRequestMethodException();
-                }
                 return $resource->getPostCommand();
             case new PutRequestMethod():
-                if (!$resource instanceof SupportsPutRequests) {
-                    throw new UnsupportedRequestMethodException();
-                }
                 return $resource->getPutCommand();
         }
         throw new UnsupportedRequestMethodException();
