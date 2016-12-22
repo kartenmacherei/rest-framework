@@ -18,11 +18,24 @@ abstract class AbstractResourceRouter implements ResourceRouter
     private $acl;
 
     /**
+     * @var RestResource[]
+     */
+    private $resources = [];
+
+    /**
      * @param Acl $acl
      */
     public function __construct(Acl $acl = null)
     {
         $this->acl = $acl;
+    }
+
+    /**
+     * @param RestResource $resource
+     */
+    public function addResource(RestResource $resource)
+    {
+        $this->resources[] = $resource;
     }
 
     /**
@@ -74,6 +87,15 @@ abstract class AbstractResourceRouter implements ResourceRouter
     /**
      * @param Request $request
      * @return RestResource
+     * @throws NoMoreRoutersException
      */
-    abstract protected function doRoute(Request $request): RestResource;
+    protected function doRoute(Request $request): RestResource
+    {
+        foreach ($this->resources as $resource) {
+            if ($resource->isIdentifiedBy($request->getUri())) {
+                return $resource;
+            }
+        }
+        throw new NoMoreRoutersException();
+    }
 }

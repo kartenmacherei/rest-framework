@@ -25,10 +25,11 @@ class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
     public function testReturnsResourceRequest()
     {
         $restResource = $this->getRestResourceMock();
+        $restResource->method('isIdentifiedBy')->willReturn(true);
 
         $router = $this->getAbstractRouter();
+        $router->addResource($restResource);
         $router->method('canRoute')->willReturn(true);
-        $router->method('doRoute')->willReturn($restResource);
 
         $this->assertSame($restResource, $router->route($this->getRequestMock()));
     }

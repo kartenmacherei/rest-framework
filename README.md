@@ -12,11 +12,13 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 
 ### RestResource
 
+- Provides a `Pattern` that can be matches against an ```URI``` 
 - Supports HTTP verbs by implementing interfaces like `SupportsGetRequests`
 - Returns `Action` objects through explicit methods like `getPostCommand()` or `getQuery()` 
 
 ### ResourceRouter
 
+- Holds references to all ```RestResource``` objects it is responsible for
 - Determines if it is responsible for routing a given URL in `canRoute()`
 - Returns a `RestResource` in `doRoute()`
 

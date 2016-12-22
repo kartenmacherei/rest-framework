@@ -7,9 +7,20 @@ use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
+use Kartenmacherei\RestFramework\Request\Pattern;
+use Kartenmacherei\RestFramework\Request\Uri;
 
 abstract class RestResource
 {
+    /**
+     * @param Uri $uri
+     * @return bool
+     */
+    public function isIdentifiedBy(Uri $uri): bool
+    {
+        return $uri->matches($this->getUriPattern());
+    }
+
     /**
      * @param RequestMethod $method
      * @return bool
@@ -27,6 +38,11 @@ abstract class RestResource
         $implementedInterfaces = class_implements($this);
         return array_values(array_intersect_key($this->getMethodMap(), $implementedInterfaces));
     }
+
+    /**
+     * @return Pattern
+     */
+    abstract protected function getUriPattern(): Pattern;
 
     /**
      * @return array
