@@ -3,9 +3,22 @@
 	"description": "Micro framework for creating RESTful webservices",
 	"type": "library",
 	"keywords": ["framework", "rest", "restful", "kartenmacherei"],
-	"homepage": "https://bitbucket.org/kartenmacherei/rest-framework",
+	"homepage": "https://github.com/kartenmacherei/rest-framework",
 	"license": "MIT",
-	"authors": [],
+	"authors": [
+		{
+			"name": "Sebastian Heuer",
+			"email": "sebastian.heuer@kartenmacherei.de"
+		},
+		{
+			"name": "Lee Wilkins",
+			"email": "lee.wilkins@kartenmacherei.de"
+		},
+		{
+			"name": "Victor Sanchez",
+			"email": "victor.sanchez@kartenmacherei.de"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"Kartenmacherei\\RestFramework\\": "src"
