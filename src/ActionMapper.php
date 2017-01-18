@@ -2,13 +2,18 @@
 namespace Kartenmacherei\RestFramework;
 
 use Kartenmacherei\RestFramework\Action\Action;
+use Kartenmacherei\RestFramework\Request\DeleteRequest;
+use Kartenmacherei\RestFramework\Request\GetRequest;
 use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
-use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
+use Kartenmacherei\RestFramework\Request\PatchRequest;
+use Kartenmacherei\RestFramework\Request\PostRequest;
+use Kartenmacherei\RestFramework\Request\PutRequest;
+use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\RestResource\SupportsDeleteRequests;
 use Kartenmacherei\RestFramework\RestResource\SupportsGetRequests;
@@ -19,29 +24,34 @@ use Kartenmacherei\RestFramework\RestResource\SupportsPutRequests;
 class ActionMapper
 {
     /**
-     * @param RequestMethod $requestMethod
+     * @param Request $request
      * @param RestResource $resource
      * @return Action
      * @throws UnsupportedRequestMethodException
      */
-    public function getAction(RequestMethod $requestMethod, RestResource $resource): Action
+    public function getAction(Request $request, RestResource $resource): Action
     {
-        if (!$resource->supports($requestMethod)) {
+        if (!$resource->supports($request->getMethod())) {
             throw new UnsupportedRequestMethodException();
         }
 
         /** @var RestResource|SupportsDeleteRequests|SupportsGetRequests|SupportsPatchRequests|SupportsPostRequests|SupportsPutRequests $resource */
-        switch ($requestMethod) {
+        switch ($request->getMethod()) {
             case new DeleteRequestMethod():
-                return $resource->getDeleteCommand();
+                /** @var DeleteRequest $request */
+                return $resource->getDeleteCommand($request);
             case new GetRequestMethod():
-                return $resource->getQuery();
+                /** @var GetRequest $request */
+                return $resource->getQuery($request);
             case new PatchRequestMethod():
-                return $resource->getPatchCommand();
+                /** @var PatchRequest $request */
+                return $resource->getPatchCommand($request);
             case new PostRequestMethod():
-                return $resource->getPostCommand();
+                /** @var PostRequest $request */
+                return $resource->getPostCommand($request);
             case new PutRequestMethod():
-                return $resource->getPutCommand();
+                /** @var PutRequest $request */
+                return $resource->getPutCommand($request);
         }
         throw new UnsupportedRequestMethodException();
     }

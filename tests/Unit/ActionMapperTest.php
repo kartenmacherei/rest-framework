@@ -4,6 +4,8 @@ namespace Kartenmacherei\RestFramework\UnitTests;
 use Kartenmacherei\RestFramework\Action\Command;
 use Kartenmacherei\RestFramework\Action\Query;
 use Kartenmacherei\RestFramework\ActionMapper;
+use Kartenmacherei\RestFramework\Request\DeleteRequest;
+use Kartenmacherei\RestFramework\Request\GetRequest;
 use Kartenmacherei\RestFramework\Request\Method\DeleteRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
@@ -11,6 +13,9 @@ use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
+use Kartenmacherei\RestFramework\Request\PatchRequest;
+use Kartenmacherei\RestFramework\Request\PostRequest;
+use Kartenmacherei\RestFramework\Request\PutRequest;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\RestResourceStubSupportingAllMethods;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\SomeRequestMethod;
@@ -35,12 +40,38 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
         $resource->method('supports')->willReturn(true);
         $resource->expects($this->once())->method($expectedMethod)->willReturn($action);
 
+        $request = $this->getRequestMock($requestMethod);
+        $request->method('getMethod')->willReturn($requestMethod);
+
         $mapper = new ActionMapper();
-        $actualAction = $mapper->getAction($requestMethod, $resource);
+        $actualAction = $mapper->getAction($request, $resource);
 
         $this->assertSame($action, $actualAction);
     }
 
+    /**
+     * @param RequestMethod $requestMethod
+     * 
+     * @return \PHPUnit_Framework_MockObject_MockObject|PatchRequest
+     */
+    private function getRequestMock(RequestMethod $requestMethod)
+    {
+        switch (true)
+        {
+            case $requestMethod instanceof PatchRequestMethod:
+                return $this->getPatchRequestMock();
+            case $requestMethod instanceof GetRequestMethod:
+                return $this->getGetRequestMock();
+            case $requestMethod instanceof PutRequestMethod:
+                return $this->getPutRequestMock();
+            case $requestMethod instanceof DeleteRequestMethod:
+                return $this->getDeleteRequestMock();
+            case $requestMethod instanceof PostRequestMethod:
+                return $this->getPostRequestMock();
+        }
+        throw new \RuntimeException('Invalid Request Method');
+    }
+    
     /**
      * @return array
      */
@@ -65,9 +96,12 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
         $resource = $this->getRestResourceMock();
         $mapper = new ActionMapper();
 
+        $request = $this->getRequestMock($requestMethod);
+        $request->method('getMethod')->willReturn($requestMethod);
+
         $this->expectException(UnsupportedRequestMethodException::class);
 
-        $mapper->getAction($requestMethod, $resource);
+        $mapper->getAction($request, $resource);
     }
 
     public function testThrowsExceptionIfMethodIsUnknown()
@@ -76,7 +110,11 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
         $mapper = new ActionMapper();
         $this->expectException(UnsupportedRequestMethodException::class);
 
-        $mapper->getAction(new SomeRequestMethod(), $resource);
+        $request = $this->getGetRequestMock();
+        $request->method('getMethod')->willReturn(new SomeRequestMethod());
+
+
+        $mapper->getAction($request, $resource);
     }
 
     /**
@@ -99,5 +137,45 @@ class ActionMapperTest extends \PHPUnit_Framework_TestCase
     private function getRestResourceMock()  
     {
         return $this->createMock(RestResourceStubSupportingAllMethods::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|GetRequest
+     */
+    private function getGetRequestMock()
+    {
+        return $this->createMock(GetRequest::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|DeleteRequest
+     */
+    private function getDeleteRequestMock()
+    {
+        return $this->createMock(DeleteRequest::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|PostRequest
+     */
+    private function getPostRequestMock()
+    {
+        return $this->createMock(PostRequest::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|PutRequest
+     */
+    private function getPutRequestMock()
+    {
+        return $this->createMock(PutRequest::class);
+    }
+    
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|PatchRequest
+     */
+    private function getPatchRequestMock()
+    {
+        return $this->createMock(PatchRequest::class);
     }
 }

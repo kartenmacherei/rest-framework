@@ -64,7 +64,7 @@ class Framework
             if ($request->isOptionsRequest()) {
                 return new OptionsResponse($resource->getSupportedMethods());
             }
-            return $this->actionMapper->getAction($request->getMethod(), $resource)->execute();
+            return $this->actionMapper->getAction($request, $resource)->execute();
         } catch (NoMoreRoutersException $e) {
             return new NotFoundResponse();
         } catch (UnauthorizedException $e) {
