@@ -17,6 +17,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Request
+ * @covers \Kartenmacherei\RestFramework\Request\DeleteRequest
  * @covers \Kartenmacherei\RestFramework\Request\GetRequest
  * @covers \Kartenmacherei\RestFramework\Request\PostRequest
  * @covers \Kartenmacherei\RestFramework\Request\Uri
