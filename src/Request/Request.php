@@ -64,7 +64,7 @@ abstract class Request
             case RequestMethod::OPTIONS:
                 return new OptionsRequest($uri, $headers);
             case RequestMethod::DELETE:
-                return new DeleteRequest($uri, $headers, $_GET);
+                return new DeleteRequest($uri, $headers, $_GET, $body);
             case RequestMethod::GET:
                 return new GetRequest($uri, $headers, $_GET);
             case RequestMethod::PATCH:
