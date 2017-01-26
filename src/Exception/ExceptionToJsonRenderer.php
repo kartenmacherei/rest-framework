@@ -1,13 +1,23 @@
 <?php
 namespace Kartenmacherei\RestFramework\Exception;
 
-class ExceptionToJsonRenderer
+class ExceptionToJsonRenderer implements ExceptionRenderer
 {
+    /**
+     * @param $throwable
+     *
+     * @return string
+     */
+    public function render(\Throwable $throwable): string
+    {
+        return $this->toJson($throwable);
+    }
+
     /**
      * @param \Throwable $throwable
      * @return string
      */
-    public function toJson(\Throwable $throwable): string
+    private function toJson(\Throwable $throwable): string
     {
         return json_encode(
             [
