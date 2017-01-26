@@ -35,6 +35,15 @@ class JsonBody extends Body
 
     /**
      * @param string $selector
+     * @return bool
+     */
+    public function has(string $selector): bool
+    {
+        return $this->json->has($selector);
+    }
+
+    /**
+     * @param string $selector
      * @return \Kartenmacherei\RestFramework\JsonArray|JsonObject
      */
     public function query(string $selector)
