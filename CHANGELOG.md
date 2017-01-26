@@ -2,6 +2,16 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [2.1.1] - 2017-01-26
+
+### Changed
+
+* `ErrorHandler::register()` now accepts an optional `ExceptionRender`. If no renderer is provided, `JsonExceptionRenderer` will be used to retain backwards compatibility.
+
+### Added
+
+* introduced `JsonBody::has()`
+
 ## [2.1.0] - 2017-01-19
 
 ### Changed
@@ -24,7 +34,8 @@ Initial Release
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/kartenmacherei/rest-framework/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/kartenmacherei/rest-framework/compare/2.1.1...HEAD
 [1.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/1.0.0
 [2.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.0.0
 [2.1.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.0
+[2.1.1]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.1
