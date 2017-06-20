@@ -90,7 +90,7 @@ abstract class Request
      * @param string $name
      * @return bool
      */
-    protected function hasHeader(string $name): bool
+    public function hasHeader(string $name): bool
     {
         return $this->headers->has($name);
     }
@@ -99,7 +99,7 @@ abstract class Request
      * @param string $name
      * @return Header
      */
-    protected function getHeader(string $name): Header
+    public function getHeader(string $name): Header
     {
         return $this->headers->get($name);
     }

@@ -40,7 +40,7 @@ class GetRequest extends Request
     public function getParameter($name)
     {
         if (!$this->hasParameter($name)) {
-            throw new RequestParameterException(sprintf('Parameter %s not found'));
+            throw new RequestParameterException(sprintf('Parameter %s not found', $name));
         }
         return $this->parameters[$name];
     }
