@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="version" default="setup">
+<project name="kartenmacherei-rest-framework" default="setup">
 
     <target name="setup" depends="install-tools"/>
+
+    <target name="-tools-installed">
+        <available file="${basedir}/tools" property="tools-installed" type="dir"/>
+    </target>
 
     <target name="install-tools" unless="tools-installed" depends="-tools-installed" description="Install tools with Phive">
         <exec executable="phive" taskname="phive">
