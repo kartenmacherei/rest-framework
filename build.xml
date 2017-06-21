@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="kartenmacherei-rest-framework" default="setup">
 
-    <target name="setup" depends="install-tools"/>
+    <target name="setup" depends="clean, install-tools"/>
+    
+    <target name="clean" unless="clean.done" description="Cleanup build artifacts">
+        <delete dir="${basedir}/tools"/>
+        <delete dir="${basedir}/vendor"/>
+        <delete file="${basedir}/src/autoload.php"/>
+
+        <property name="clean.done" value="true"/>
+    </target>
 
     <target name="-tools-installed">
         <available file="${basedir}/tools" property="tools-installed" type="dir"/>
