@@ -16,7 +16,7 @@ install:
   - ant setup
   - travis_retry composer install --no-interaction --prefer-source
 
-script: tools/phpunit
+script: bin/phpunit
 
 php:
   - 7.0
