@@ -22,7 +22,9 @@ abstract class Body
             return new RawBody($content);
         }
 
-        switch ($_SERVER['CONTENT_TYPE']) {
+        $contentType = explode(';', $_SERVER['CONTENT_TYPE']);
+
+        switch (reset($contentType)) {
             case ContentType::JSON:
             case ContentType::JSON_UTF8:
                 return new JsonBody($content);

@@ -43,6 +43,12 @@ class BodyTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(JsonBody::class, Body::fromSuperGlobals(__DIR__  . '/fixtures/jsonBody.txt'));
     }
 
+    public function testCreatesJsonBodyWithExtendedContentType()
+    {
+        $_SERVER['CONTENT_TYPE'] = ContentType::JSON. '; charset=utf-8';
+        $this->assertInstanceOf(JsonBody::class, Body::fromSuperGlobals(__DIR__  . '/fixtures/jsonBody.txt'));
+    }
+
     public function testCreatesFormDataBody()
     {
         $_SERVER['CONTENT_TYPE'] = ContentType::MULTIPART_FORMDATA;
