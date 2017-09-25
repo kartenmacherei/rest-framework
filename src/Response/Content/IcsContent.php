@@ -12,7 +12,7 @@ class IcsContent implements Content
     /**
      * @param string $value
      */
-    function __construct(string $value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }
