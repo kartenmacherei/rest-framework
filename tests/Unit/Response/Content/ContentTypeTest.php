@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Response\Content;
 
 use Kartenmacherei\RestFramework\Response\Content\ContentType;
+use Kartenmacherei\RestFramework\Response\Content\IcsContentType;
 use Kartenmacherei\RestFramework\Response\Content\JsonContentType;
 use Kartenmacherei\RestFramework\Response\Content\UnsupportedContentTypeException;
 
@@ -21,6 +22,11 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(UnsupportedContentTypeException::class);
         ContentType::fromString('foo');
+    }
+    public function testReturnsIcsContentType()
+    {
+        $actual = ContentType::fromString(ContentType::ICS);
+        $this->assertInstanceOf(IcsContentType::class, $actual);
     }
 
 }

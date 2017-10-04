@@ -8,6 +8,7 @@ abstract class ContentType
     const JSON_UTF8 = 'application/json; charset=UTF-8';
     const PDF = 'application/pdf';
     const PLAIN = 'text/plain';
+    const ICS = 'text/calendar; charset=utf-8';
 
     /**
      * @param $type
@@ -24,6 +25,8 @@ abstract class ContentType
                 return new PdfContentType();
             case self::PLAIN:
                 return new PlainContentType();
+            case self::ICS:
+                return new IcsContentType();
         }
         throw new UnsupportedContentTypeException(sprintf('Content type %s is not supported', $type));
     }
