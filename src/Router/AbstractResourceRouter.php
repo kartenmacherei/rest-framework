@@ -10,17 +10,17 @@ abstract class AbstractResourceRouter implements ResourceRouter
     /**
      * @var ResourceRouter
      */
-    private $next;
+    protected $next;
 
     /**
      * @var Acl
      */
-    private $acl;
+    protected $acl;
 
     /**
      * @var RestResource[]
      */
-    private $resources = [];
+    protected $resources = [];
 
     /**
      * @param Acl $acl
@@ -59,7 +59,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
      * @param Request $request
      * @throws UnauthorizedException
      */
-    private function protect(Request $request)
+    protected function protect(Request $request)
     {
         if (null === $this->acl || $request->isOptionsRequest()) {
             return;
