@@ -71,6 +71,14 @@ abstract class AbstractResourceRouter implements ResourceRouter
     }
 
     /**
+     * @return RestResource[]
+     */
+    protected function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
      * @param ResourceRouter $router
      */
     public function setNext(ResourceRouter $router)
@@ -91,7 +99,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
      */
     protected function doRoute(Request $request): RestResource
     {
-        foreach ($this->resources as $resource) {
+        foreach ($this->getResources() as $resource) {
             if ($resource->isIdentifiedBy($request->getUri())) {
                 return $resource;
             }
