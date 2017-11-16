@@ -2,6 +2,12 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [2.1.5] - 2017-11-16
+
+### Added
+
+* introduced `Request::hasBody()`
+
 ## [2.1.1] - 2017-01-26
 
 ### Changed
@@ -39,3 +45,4 @@ Initial Release
 [2.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.0.0
 [2.1.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.0
 [2.1.1]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.1
+[2.1.5]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.5
