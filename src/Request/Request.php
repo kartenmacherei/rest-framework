@@ -119,4 +119,12 @@ abstract class Request
         }
         return new Token($matches[1]);
     }
+
+    /**
+     * @return bool
+     */
+    public function hasBody(): bool
+    {
+        return !$this instanceof GetRequest && !$this instanceof OptionsRequest;
+    }
 }
