@@ -2,11 +2,11 @@
 namespace Kartenmacherei\RestFramework\Response\Content;
 
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\IcsContent
  */
-class IcsContentTest extends PHPUnit_Framework_TestCase
+class IcsContentTest extends TestCase
 {
     public function testGetContentType()
     {

@@ -2,18 +2,17 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Router;
 
 use Kartenmacherei\RestFramework\Request\Request;
-use Kartenmacherei\RestFramework\ResourceRequest\ResourceRequest;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Router\RouterChain
  */
-class RouterChainTest extends PHPUnit_Framework_TestCase
+class RouterChainTest extends TestCase
 {
     public function testThrowsExceptionIfChainIsEmpty()
     {
@@ -46,7 +45,7 @@ class RouterChainTest extends PHPUnit_Framework_TestCase
         $router1 = $this->getRouterMock();
         $router1->expects($this->once())->method('setNext')->with($router2);
 
-        $chain = new RouterChain($this->getRequestMock());
+        $chain = new RouterChain();
         $chain->addRouter($router1);
         $chain->addRouter($router2);
     }

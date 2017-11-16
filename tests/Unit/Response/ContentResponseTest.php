@@ -3,9 +3,9 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Response\Content\JsonContent;
 use Kartenmacherei\RestFramework\Response\ContentResponse;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentResponseTest extends PHPUnit_Framework_TestCase
+class ContentResponseTest extends TestCase
 {
     /**
      * @runInSeparateProcess needed because headers are being sent by ContentResponse

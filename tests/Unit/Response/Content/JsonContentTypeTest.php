@@ -2,12 +2,12 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Response\Content;
 
 use Kartenmacherei\RestFramework\Response\Content\JsonContentType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\JsonContentType
  */
-class JsonContentTypeTest extends PHPUnit_Framework_TestCase
+class JsonContentTypeTest extends TestCase
 {
     public function testAsString()
     {

@@ -8,11 +8,12 @@ use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\RestResourceStubSupportingAllMethods;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\RestResourceStubSupportingGetAndPost;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\RestResource\RestResource
  */
-class RestResourceTest extends \PHPUnit_Framework_TestCase
+class RestResourceTest extends TestCase
 {
 
     public function testSupportsMethodReturnsExpectedResult()

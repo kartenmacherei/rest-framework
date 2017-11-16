@@ -2,9 +2,9 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Response\NoContentResponse;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class NoContentResponseTest extends PHPUnit_Framework_TestCase
+class NoContentResponseTest extends TestCase
 {
     /**
      * @runInSeparateProcess needed because headers are being sent by ContentResponse

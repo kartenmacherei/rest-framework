@@ -1,12 +1,12 @@
 <?php
 namespace Kartenmacherei\RestFramework\Response\Content;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\IcsContentType
  */
-class IcsContentTypeTest extends PHPUnit_Framework_TestCase
+class IcsContentTypeTest extends TestCase
 {
     public function testAsString()
     {

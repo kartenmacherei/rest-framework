@@ -2,11 +2,12 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Response\NotFoundResponse;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\NotFoundResponse
  */
-class NotFoundResponseTest extends \PHPUnit_Framework_TestCase
+class NotFoundResponseTest extends TestCase
 {
     public function testFlush()
     {

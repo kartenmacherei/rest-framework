@@ -15,19 +15,20 @@ use Kartenmacherei\RestFramework\Request\PutRequest;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection;
 use Kartenmacherei\RestFramework\Request\Uri;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Request
  * @covers \Kartenmacherei\RestFramework\Request\DeleteRequest
  * @covers \Kartenmacherei\RestFramework\Request\GetRequest
  * @covers \Kartenmacherei\RestFramework\Request\PostRequest
- * @covers \Kartenmacherei\RestFramework\Request\Uri
- * @covers \Kartenmacherei\RestFramework\Request\Body\Body
- * @covers \Kartenmacherei\RestFramework\Request\Header\HeaderCollection
- * @covers \Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection
+ * @uses \Kartenmacherei\RestFramework\Request\Uri
+ * @uses \Kartenmacherei\RestFramework\Request\Body\Body
+ * @uses \Kartenmacherei\RestFramework\Request\Header\HeaderCollection
+ * @uses \Kartenmacherei\RestFramework\Request\UploadedFile\UploadedFilesCollection
  */
-class RequestTest extends PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     /**
      * @dataProvider methodProvider
@@ -114,7 +115,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param Uri $uri
      * @param bool $hasHeader
      *
-     * @return Request|\PHPUnit_Framework_MockObject_MockObject
+     * @return Request|PHPUnit_Framework_MockObject_MockObject
      */
     private function getAbstractRequest(Uri $uri, bool $hasHeader = true)
     {
@@ -124,7 +125,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @param bool $hasHeader
      *
-     * @return HeaderCollection|\PHPUnit_Framework_MockObject_MockObject
+     * @return HeaderCollection|PHPUnit_Framework_MockObject_MockObject
      */
     private function getHeaderCollectionMock(bool $hasHeader = true)
     {
@@ -136,13 +137,5 @@ class RequestTest extends PHPUnit_Framework_TestCase
             $headerCollection->method('get')->willThrowException(new HeaderException);
         }
         return $headerCollection;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|UploadedFilesCollection
-     */
-    private function getUploadedFilesCollectionMock()
-    {
-        return $this->createMock(UploadedFilesCollection::class);
     }
 }

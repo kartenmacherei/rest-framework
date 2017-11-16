@@ -3,12 +3,13 @@ namespace Kartenmacherei\RestFramework\UnitTests\Request\Method;
 
 use Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Method\AbstractRequestMethod
  */
-class AbstractRequestMethodTest extends PHPUnit_Framework_TestCase
+class AbstractRequestMethodTest extends TestCase
 {
     public function testEqualsReturnsTrue()
     {
@@ -20,6 +21,7 @@ class AbstractRequestMethodTest extends PHPUnit_Framework_TestCase
     public function testEqualsReturnsFalse()
     {
         $requestMethod = $this->getAbstractRequestMethod();
+        /** @var GetRequestMethod|PHPUnit_Framework_MockObject_MockObject $otherRequestMethod */
         $otherRequestMethod = $this->createMock(GetRequestMethod::class);
 
         $this->assertFalse($requestMethod->equals($otherRequestMethod));
@@ -32,7 +34,7 @@ class AbstractRequestMethodTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractRequestMethod
+     * @return PHPUnit_Framework_MockObject_MockObject|AbstractRequestMethod
      */
     private function getAbstractRequestMethod()
     {

@@ -4,12 +4,12 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response\Content;
 use Kartenmacherei\RestFramework\Response\Content\EncodeException;
 use Kartenmacherei\RestFramework\Response\Content\JsonContent;
 use Kartenmacherei\RestFramework\Response\Content\JsonContentType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\JsonContent
  */
-class JsonContentTest extends PHPUnit_Framework_TestCase
+class JsonContentTest extends TestCase
 {
     public function testGetContentType()
     {

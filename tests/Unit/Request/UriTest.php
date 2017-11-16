@@ -5,13 +5,13 @@ use Kartenmacherei\RestFramework\EnsureException;
 use Kartenmacherei\RestFramework\Request\Pattern;
 use Kartenmacherei\RestFramework\Request\Uri;
 use Kartenmacherei\RestFramework\Request\UriException;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Uri
  */
-class UriTest extends PHPUnit_Framework_TestCase
+class UriTest extends TestCase
 {
     public function testAsString()
     {

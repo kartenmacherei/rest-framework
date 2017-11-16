@@ -6,13 +6,13 @@ use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\AbstractResourceRouter;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Router\AbstractResourceRouter
  */
-class AbstractResourceRouterTest extends PHPUnit_Framework_TestCase
+class AbstractResourceRouterTest extends TestCase
 {
 
     public function testRouteThrowsException()

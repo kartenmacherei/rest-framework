@@ -3,14 +3,12 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\ResourceRequest\BadRequestException;
 use Kartenmacherei\RestFramework\Response\BadRequestResponse;
-use Kartenmacherei\RestFramework\Response\Content\JsonContent;
-use Kartenmacherei\RestFramework\Response\CreatedResponse;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\BadRequestResponse
  */
-class BadRequestResponseTest extends PHPUnit_Framework_TestCase
+class BadRequestResponseTest extends TestCase
 {
     /**
      * @runInSeparateProcess needed because headers are being sent by ContentResponse

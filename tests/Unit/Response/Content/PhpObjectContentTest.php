@@ -4,13 +4,13 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response\Content;
 use Kartenmacherei\RestFramework\EnsureException;
 use Kartenmacherei\RestFramework\Response\Content\PhpObjectContent;
 use Kartenmacherei\RestFramework\Response\Content\PlainContentType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\PhpObjectContent
  */
-class PhpObjectContentTest extends PHPUnit_Framework_TestCase
+class PhpObjectContentTest extends TestCase
 {
     public function testReturnsExpectedContentType()
     {

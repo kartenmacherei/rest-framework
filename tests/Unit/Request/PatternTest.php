@@ -2,11 +2,12 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Request;
 
 use Kartenmacherei\RestFramework\Request\Pattern;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Pattern
  */
-class PatternTest extends \PHPUnit_Framework_TestCase
+class PatternTest extends TestCase
 {
     /**
      * @dataProvider patternValueProvider

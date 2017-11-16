@@ -5,11 +5,12 @@ use Kartenmacherei\RestFramework\Response\Content\ContentType;
 use Kartenmacherei\RestFramework\Response\Content\IcsContentType;
 use Kartenmacherei\RestFramework\Response\Content\JsonContentType;
 use Kartenmacherei\RestFramework\Response\Content\UnsupportedContentTypeException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\Content\ContentType
  */
-class ContentTypeTest extends \PHPUnit_Framework_TestCase
+class ContentTypeTest extends TestCase
 {
 
     public function testReturnsJsonContentType()

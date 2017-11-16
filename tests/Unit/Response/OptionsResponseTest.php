@@ -4,9 +4,9 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PutRequestMethod;
 use Kartenmacherei\RestFramework\Response\OptionsResponse;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class OptionsResponseTest extends PHPUnit_Framework_TestCase
+class OptionsResponseTest extends TestCase
 {
     /**
      * @runInSeparateProcess needed because headers are being sent by ContentResponse

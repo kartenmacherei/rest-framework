@@ -8,6 +8,7 @@ use Kartenmacherei\RestFramework\Request\Body\JsonBody;
 use Kartenmacherei\RestFramework\Request\Body\RawBody;
 use Kartenmacherei\RestFramework\Request\Body\UnsupportedRequestBodyException;
 use Kartenmacherei\RestFramework\Response\Content\ContentType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @backupGlobals enabled
@@ -15,9 +16,9 @@ use Kartenmacherei\RestFramework\Response\Content\ContentType;
  * @covers \Kartenmacherei\RestFramework\Request\Body\FormDataBody
  * @covers \Kartenmacherei\RestFramework\Request\Body\RawBody
  * @covers \Kartenmacherei\RestFramework\Request\Body\JsonBody
- * @covers \Kartenmacherei\RestFramework\JsonObject
+ * @uses \Kartenmacherei\RestFramework\JsonObject
  */
-class BodyTest extends \PHPUnit_Framework_TestCase
+class BodyTest extends TestCase
 {
     public function testCreatesRawBodyIfContentTypeIsEmpty()
     {

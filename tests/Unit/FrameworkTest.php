@@ -18,14 +18,15 @@ use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Framework
- * @covers \Kartenmacherei\RestFramework\Factory
- * @covers \Kartenmacherei\RestFramework\Response\BadRequestResponse
- * @covers \Kartenmacherei\RestFramework\Response\OptionsResponse
+ * @uses \Kartenmacherei\RestFramework\Factory
+ * @uses \Kartenmacherei\RestFramework\Response\BadRequestResponse
+ * @uses \Kartenmacherei\RestFramework\Response\OptionsResponse
  */
-class FrameworkTest extends \PHPUnit_Framework_TestCase
+class FrameworkTest extends TestCase
 {
     public function testCreateInstanceReturnsExpectedObject()
     {

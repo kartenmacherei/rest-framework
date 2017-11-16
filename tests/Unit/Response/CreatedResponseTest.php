@@ -3,12 +3,12 @@ namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Response\Content\JsonContent;
 use Kartenmacherei\RestFramework\Response\CreatedResponse;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\CreatedResponse
  */
-class CreatedResponseTest extends PHPUnit_Framework_TestCase
+class CreatedResponseTest extends TestCase
 {
     /**
      * @runInSeparateProcess needed because headers are being sent by ContentResponse

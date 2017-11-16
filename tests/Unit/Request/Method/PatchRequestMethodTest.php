@@ -3,12 +3,12 @@ namespace Kartenmacherei\RestFramework\UnitTests\Request\Method;
 
 use Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\RequestMethod;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Request\Method\PatchRequestMethod
  */
-class PatchRequestMethodTest extends PHPUnit_Framework_TestCase
+class PatchRequestMethodTest extends TestCase
 {
     public function testAsString()
     {

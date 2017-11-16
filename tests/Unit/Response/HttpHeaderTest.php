@@ -2,12 +2,12 @@
 namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
 use Kartenmacherei\RestFramework\Response\HttpHeader;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\HttpHeader
  */
-class HttpHeaderTest extends PHPUnit_Framework_TestCase
+class HttpHeaderTest extends TestCase
 {
     /**
      * @dataProvider headerDataProvider

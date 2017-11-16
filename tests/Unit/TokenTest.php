@@ -2,11 +2,12 @@
 namespace Kartenmacherei\RestFramework\UnitTests;
 
 use Kartenmacherei\RestFramework\Token;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Token
  */
-class TokenTest extends \PHPUnit_Framework_TestCase
+class TokenTest extends TestCase
 {
     public function testReturnsInitialStringValue()
     {

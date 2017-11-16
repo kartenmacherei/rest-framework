@@ -1,13 +1,13 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests\Response;
 
-use Kartenmacherei\RestFramework\Response\MethodNotAllowedResponse;
 use Kartenmacherei\RestFramework\Response\UnauthorizedResponse;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Response\UnauthorizedResponse
  */
-class UnauthorziedResponseTest extends \PHPUnit_Framework_TestCase
+class UnauthorziedResponseTest extends TestCase
 {
     public function testFlush()
     {

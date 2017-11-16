@@ -4,15 +4,19 @@ namespace Kartenmacherei\RestFramework\UnitTests;
 use Kartenmacherei\RestFramework\JsonException;
 use Kartenmacherei\RestFramework\JsonObject;
 use Kartenmacherei\RestFramework\JsonArray;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\JsonObject
  * @covers \Kartenmacherei\RestFramework\JsonArray
  */
-class JsonObjectTest extends \PHPUnit_Framework_TestCase
+class JsonObjectTest extends TestCase
 {
     /**
      * @dataProvider dataProvider
+     *
+     * @param mixed $data
+     * @param mixed $expected
      */
     public function test($data, $expected)
     {

@@ -19,11 +19,12 @@ use Kartenmacherei\RestFramework\Request\PutRequest;
 use Kartenmacherei\RestFramework\RestResource\RestResource;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\RestResourceStubSupportingAllMethods;
 use Kartenmacherei\RestFramework\UnitTests\Stubs\SomeRequestMethod;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Kartenmacherei\RestFramework\ActionMapper
  */
-class ActionMapperTest extends \PHPUnit_Framework_TestCase
+class ActionMapperTest extends TestCase
 {
     /**
      * @dataProvider mapTestDataProvider
