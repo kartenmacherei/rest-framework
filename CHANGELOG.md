@@ -2,6 +2,12 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [Unreleased]
+
+### Added
+
+* introduced `ServiceUnavailableResponse`
+
 ## [2.1.5] - 2017-11-16
 
 ### Added
