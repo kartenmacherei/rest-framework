@@ -22,7 +22,7 @@ class ContentResponseTest extends TestCase
         $response->flush();
         $output = ob_get_clean();
 
-        $expectedHeaders = ['Content-Type: application/json'];
+        $expectedHeaders = ['Content-Type: application/json; charset=UTF-8'];
         $actualHeaders = xdebug_get_headers();
         $this->assertEquals($expectedHeaders, $actualHeaders);
 

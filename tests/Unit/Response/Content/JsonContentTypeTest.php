@@ -11,6 +11,6 @@ class JsonContentTypeTest extends TestCase
 {
     public function testAsString()
     {
-        $this->assertSame('application/json', (new JsonContentType())->asString());
+        $this->assertSame('application/json; charset=UTF-8', (new JsonContentType())->asString());
     }
 }

@@ -8,7 +8,7 @@ class JsonContentType extends ContentType
      */
     public function asString(): string
     {
-        return self::JSON;
+        return self::JSON_UTF8;
     }
 
 }
