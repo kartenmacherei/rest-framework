@@ -42,7 +42,7 @@ abstract class RestResource
     /**
      * @return Pattern
      */
-    abstract protected function getUriPattern(): Pattern;
+    abstract public function getUriPattern(): Pattern;
 
     /**
      * @return array
