@@ -3,15 +3,14 @@
 declare(strict_types=1);
 namespace Kartenmacherei\RestFramework\Monitoring;
 
-use Kartenmacherei\RestFramework\Config;
 use Kartenmacherei\RestFramework\Factory;
 
 class MonitoringLocator
 {
     /**
-     * @var Config
+     * @var bool
      */
-    private $config;
+    private $isTransactionMonitoringEnabled;
 
     /**
      * @var Factory
@@ -19,18 +18,18 @@ class MonitoringLocator
     private $factory;
 
     /**
-     * @param Config $config
+     * @param bool $isTransactionMonitoringEnabled
      * @param Factory $factory
      */
-    public function __construct(Config $config, Factory $factory)
+    public function __construct(bool $isTransactionMonitoringEnabled, Factory $factory)
     {
-        $this->config = $config;
+        $this->isTransactionMonitoringEnabled = $isTransactionMonitoringEnabled;
         $this->factory = $factory;
     }
 
     public function getTransactionMonitoring(): TransactionMonitoring
     {
-        if ($this->config->isTransactionMonitoringEnabled()) {
+        if ($this->isTransactionMonitoringEnabled) {
             return $this->factory->createConcreteTransactionMonitoring();
         }
 

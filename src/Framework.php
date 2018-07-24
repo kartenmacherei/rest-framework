@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework;
 
+use Kartenmacherei\RestFramework\Action\Action;
 use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
@@ -93,7 +94,7 @@ class Framework
             }
 
             $action = $this->actionMapper->getAction($request, $resource);
-            $this->setTransactionName(get_class($action));
+            $this->setTransactionName($action);
 
             return $action->execute();
         } catch (NoMoreRoutersException $e) {
@@ -105,9 +106,9 @@ class Framework
         }
     }
 
-    private function setTransactionName(string $className)
+    private function setTransactionName(Action $action)
     {
-        $transactionName = $this->transactionNameMapper->getTransactionName($className);
+        $transactionName = $this->transactionNameMapper->getTransactionName(get_class($action));
         $this->transactionMonitoring->nameTransaction($transactionName);
     }
 }

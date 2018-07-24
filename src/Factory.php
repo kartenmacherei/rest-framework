@@ -52,9 +52,8 @@ class Factory
     {
         $appName = $this->config->getApplicationName();
         $newRelicAgent = $this->createNewRelicFactory()->createNewRelicAgent($appName);
-        $transactionNameMapper = $this->createTransactionNameMapper();
 
-        return new NewRelicMonitoring($newRelicAgent, $transactionNameMapper);
+        return new NewRelicMonitoring($newRelicAgent);
     }
 
     public function createDummyTransactionMonitoring(): TransactionMonitoring

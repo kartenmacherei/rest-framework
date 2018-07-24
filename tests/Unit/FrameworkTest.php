@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests;
 
+use function get_class;
 use Kartenmacherei\RestFramework\Action\Action;
 use Kartenmacherei\RestFramework\ActionMapper;
 use Kartenmacherei\RestFramework\Config;
@@ -29,6 +30,8 @@ use PHPUnit_Framework_MockObject_MockObject;
  * @uses \Kartenmacherei\RestFramework\Factory
  * @uses \Kartenmacherei\RestFramework\Response\BadRequestResponse
  * @uses \Kartenmacherei\RestFramework\Response\OptionsResponse
+ * @uses \Kartenmacherei\RestFramework\Monitoring\MonitoringLocator
+ * @uses \Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper
  */
 class FrameworkTest extends TestCase
 {
@@ -82,6 +85,10 @@ class FrameworkTest extends TestCase
     public function testReturnsNotFoundResponseWhenNoMoreRoutersExceptionIsThrown()
     {
         $this->routerChainMock->method('route')->willThrowException(new NoMoreRoutersException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
         $this->assertInstanceOf(NotFoundResponse::class, $this->framework->run($this->getRequestMock()));
     }
@@ -89,6 +96,10 @@ class FrameworkTest extends TestCase
     public function testReturnsUnauthorizedResponseWhenUnauthorizedExceptionIsThrown()
     {
         $this->routerChainMock->method('route')->willThrowException(new UnauthorizedException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
         $this->assertInstanceOf(UnauthorizedResponse::class, $this->framework->run($this->getRequestMock()));
     }
@@ -99,6 +110,10 @@ class FrameworkTest extends TestCase
 
         $this->routerChainMock->method('route')->willReturn($resource);
         $this->actionMapperMock->method('getAction')->willThrowException(new BadRequestException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
         $this->assertInstanceOf(BadRequestResponse::class, $this->framework->run($this->getRequestMock()));
     }
@@ -123,12 +138,18 @@ class FrameworkTest extends TestCase
         $request = $this->getRequestMock();
         $request->method('isOptionsRequest')->willReturn(true);
 
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
+
         $expectedResponse = new OptionsResponse($supportedMethods);
         $this->assertEquals($expectedResponse, $this->framework->run($request));
     }
 
     public function testReturnsExpectedResponseFromAction()
     {
+        $mappedTransactionName = 'mapped-transaction-name';
         $resource = $this->getRestResourceMock();
         $response = $this->getResponseMock();
 
@@ -137,6 +158,14 @@ class FrameworkTest extends TestCase
 
         $this->routerChainMock->method('route')->willReturn($resource);
         $this->actionMapperMock->method('getAction')->willReturn($action);
+
+        $this->transactionNameMapperMock->expects($this->once())
+            ->method('getTransactionName')
+            ->with(get_class($action))
+            ->willReturn($mappedTransactionName);
+        $this->transactionMonitoring->expects($this->once())
+            ->method('nameTransaction')
+            ->with($mappedTransactionName);
 
         $this->assertSame($response, $this->framework->run($this->getRequestMock()));
     }

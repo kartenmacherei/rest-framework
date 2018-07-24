@@ -3,7 +3,6 @@
 declare(strict_types=1);
 namespace Kartenmacherei\RestFramework\UnitTests\Monitoring;
 
-use Kartenmacherei\RestFramework\Config;
 use Kartenmacherei\RestFramework\Factory;
 use Kartenmacherei\RestFramework\Monitoring\DummyTransactionMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\MonitoringLocator;
@@ -16,58 +15,42 @@ use PHPUnit_Framework_MockObject_MockObject;
  */
 class MonitoringLocatorTest extends TestCase
 {
-    /**
-     * @var Factory|PHPUnit_Framework_MockObject_MockObject
-     */
-    private $factoryMock;
-
-    /**
-     * @var Config|PHPUnit_Framework_MockObject_MockObject
-     */
-    private $configMock;
-
-    /**
-     * @var MonitoringLocator
-     */
-    private $monitoringLocator;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->factoryMock = $this->createMock(Factory::class);
-        $this->configMock = $this->createMock(Config::class);
-
-        $this->monitoringLocator = new MonitoringLocator($this->configMock, $this->factoryMock);
-    }
+    const MONITORING_ENABLED = true;
+    const MONITORING_DISABLED = false;
 
     public function testGetTransactionMonitoringReturnsNewRelicMonitoring()
     {
         $expected = $this->createMock(NewRelicMonitoring::class);
 
-        $this->configMock->expects($this->once())
-            ->method('isTransactionMonitoringEnabled')
-            ->willReturn(true);
-
-        $this->factoryMock->expects($this->once())
+        $factoryMock = $this->getFactoryMock();
+        $factoryMock->expects($this->once())
             ->method('createConcreteTransactionMonitoring')
             ->willReturn($expected);
 
-        $this->assertSame($expected, $this->monitoringLocator->getTransactionMonitoring());
+        $monitoringLocator = new MonitoringLocator(self::MONITORING_ENABLED, $factoryMock);
+
+        $this->assertSame($expected, $monitoringLocator->getTransactionMonitoring());
     }
 
     public function testGetTransactionMonitoringReturnsDummyTransactionMonitoring()
     {
         $expected = $this->createMock(DummyTransactionMonitoring::class);
 
-        $this->configMock->expects($this->once())
-            ->method('isTransactionMonitoringEnabled')
-            ->willReturn(false);
-
-        $this->factoryMock->expects($this->once())
+        $factoryMock = $this->getFactoryMock();
+        $factoryMock->expects($this->once())
             ->method('createDummyTransactionMonitoring')
             ->willReturn($expected);
 
-        $this->assertSame($expected, $this->monitoringLocator->getTransactionMonitoring());
+        $monitoringLocator = new MonitoringLocator(self::MONITORING_DISABLED, $factoryMock);
+
+        $this->assertSame($expected, $monitoringLocator->getTransactionMonitoring());
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|Factory
+     */
+    private function getFactoryMock()
+    {
+        return $this->createMock(Factory::class);
     }
 }
