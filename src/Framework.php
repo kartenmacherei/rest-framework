@@ -1,6 +1,7 @@
 <?php
 namespace Kartenmacherei\RestFramework;
 
+use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UnauthorizedException;
@@ -26,22 +27,35 @@ class Framework
     private $actionMapper;
 
     /**
+     * @var TransactionMonitoring
+     */
+    private $transactionMonitoring;
+
+    /**
      * @param RouterChain $routerChain
      * @param ActionMapper $actionMapper
+     * @param TransactionMonitoring $transactionMonitoring
      */
-    public function __construct(RouterChain $routerChain, ActionMapper $actionMapper)
+    public function __construct(RouterChain $routerChain, ActionMapper $actionMapper, TransactionMonitoring $transactionMonitoring)
     {
         $this->routerChain = $routerChain;
         $this->actionMapper = $actionMapper;
+        $this->transactionMonitoring = $transactionMonitoring;
     }
 
     /**
+     * @param Config $config
      * @return Framework
      */
-    public static function createInstance(): Framework
+    public static function createInstance(Config $config): Framework
     {
-        $factory = new Factory();
-        return new self($factory->createRouterChain(), $factory->createActionMapper());
+        $factory = new Factory($config);
+
+        return new self(
+            $factory->createRouterChain(),
+            $factory->createActionMapper(),
+            $factory->createTransactionMonitoring()
+        );
     }
 
     /**
@@ -64,7 +78,11 @@ class Framework
             if ($request->isOptionsRequest()) {
                 return new OptionsResponse($resource->getSupportedMethods());
             }
-            return $this->actionMapper->getAction($request, $resource)->execute();
+
+            $action = $this->actionMapper->getAction($request, $resource);
+            $this->transactionMonitoring->nameTransaction($action);
+
+            return $action->execute();
         } catch (NoMoreRoutersException $e) {
             return new NotFoundResponse();
         } catch (UnauthorizedException $e) {
