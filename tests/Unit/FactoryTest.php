@@ -1,10 +1,12 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests;
 
+use Kartenmacherei\NewRelic\Ensureance\Exception\EnsureNotEmptyStringException;
 use Kartenmacherei\RestFramework\ActionMapper;
 use Kartenmacherei\RestFramework\Config;
 use Kartenmacherei\RestFramework\Factory;
 use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -12,6 +14,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 /**
  * @covers \Kartenmacherei\RestFramework\Factory
  * @uses \Kartenmacherei\RestFramework\Monitoring\MonitoringLocator
+ * @uses \Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper
  */
 class FactoryTest extends TestCase
 {
@@ -47,6 +50,23 @@ class FactoryTest extends TestCase
     public function testCreateTransactionMonitoring()
     {
         $this->assertInstanceOf(TransactionMonitoring::class, $this->factory->createTransactionMonitoring());
+    }
+
+    public function testCreateConcreteTransactionMonitoring()
+    {
+        $this->expectException(EnsureNotEmptyStringException::class);
+        $this->expectExceptionMessage('Expected "application name" to not be empty');
+
+        $this->factory->createConcreteTransactionMonitoring();
+    }
+
+    public function testCreateTransactionNameMapper()
+    {
+        $this->configMock->expects($this->once())
+            ->method('getTransactionMapping')
+            ->willReturn([]);
+
+        $this->assertInstanceOf(TransactionNameMapper::class, $this->factory->createTransactionNameMapper());
     }
 
     /**

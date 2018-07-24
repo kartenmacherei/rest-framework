@@ -45,6 +45,9 @@ class Factory
         return $this->createMonitoringLocator()->getTransactionMonitoring();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function createConcreteTransactionMonitoring(): TransactionMonitoring
     {
         $appName = $this->config->getApplicationName();
@@ -66,7 +69,7 @@ class Factory
 
     private function createMonitoringLocator(): MonitoringLocator
     {
-        return new MonitoringLocator($this->config, $this);
+        return new MonitoringLocator($this->config->isTransactionMonitoringEnabled(), $this);
     }
 
     private function createNewRelicFactory(): NewRelicFactory
