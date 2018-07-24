@@ -6,6 +6,7 @@ use Kartenmacherei\RestFramework\Monitoring\MonitoringLocator;
 use Kartenmacherei\RestFramework\Monitoring\NewRelicMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\DummyTransactionMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 
 class Factory
@@ -48,8 +49,9 @@ class Factory
     {
         $appName = $this->config->getApplicationName();
         $newRelicAgent = $this->createNewRelicFactory()->createNewRelicAgent($appName);
+        $transactionNameMapper = $this->createTransactionNameMapper();
 
-        return new NewRelicMonitoring($newRelicAgent);
+        return new NewRelicMonitoring($newRelicAgent, $transactionNameMapper);
     }
 
     public function createDummyTransactionMonitoring(): TransactionMonitoring
@@ -57,14 +59,16 @@ class Factory
         return new DummyTransactionMonitoring();
     }
 
+    public function createTransactionNameMapper(): TransactionNameMapper
+    {
+        return new TransactionNameMapper($this->config->getTransactionMapping());
+    }
+
     private function createMonitoringLocator(): MonitoringLocator
     {
         return new MonitoringLocator($this->config, $this);
     }
 
-    /**
-     * @return NewRelicFactory
-     */
     private function createNewRelicFactory(): NewRelicFactory
     {
         return new NewRelicFactory();

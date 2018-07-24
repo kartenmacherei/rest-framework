@@ -2,6 +2,7 @@
 namespace Kartenmacherei\RestFramework;
 
 use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UnauthorizedException;
@@ -32,15 +33,26 @@ class Framework
     private $transactionMonitoring;
 
     /**
+     * @var TransactionNameMapper
+     */
+    private $transactionNameMapper;
+
+    /**
      * @param RouterChain $routerChain
      * @param ActionMapper $actionMapper
      * @param TransactionMonitoring $transactionMonitoring
+     * @param TransactionNameMapper $transactionNameMapper
      */
-    public function __construct(RouterChain $routerChain, ActionMapper $actionMapper, TransactionMonitoring $transactionMonitoring)
-    {
+    public function __construct(
+        RouterChain $routerChain,
+        ActionMapper $actionMapper,
+        TransactionMonitoring $transactionMonitoring,
+        TransactionNameMapper $transactionNameMapper
+    ) {
         $this->routerChain = $routerChain;
         $this->actionMapper = $actionMapper;
         $this->transactionMonitoring = $transactionMonitoring;
+        $this->transactionNameMapper = $transactionNameMapper;
     }
 
     /**
@@ -54,7 +66,8 @@ class Framework
         return new self(
             $factory->createRouterChain(),
             $factory->createActionMapper(),
-            $factory->createTransactionMonitoring()
+            $factory->createTransactionMonitoring(),
+            $factory->createTransactionNameMapper()
         );
     }
 
@@ -80,7 +93,7 @@ class Framework
             }
 
             $action = $this->actionMapper->getAction($request, $resource);
-            $this->transactionMonitoring->nameTransaction($action);
+            $this->setTransactionName(get_class($action));
 
             return $action->execute();
         } catch (NoMoreRoutersException $e) {
@@ -90,5 +103,11 @@ class Framework
         } catch (BadRequestException $e) {
             return new BadRequestResponse($e);
         }
+    }
+
+    private function setTransactionName(string $className)
+    {
+        $transactionName = $this->transactionNameMapper->getTransactionName($className);
+        $this->transactionMonitoring->nameTransaction($transactionName);
     }
 }

@@ -13,11 +13,18 @@ class NewRelicMonitoring implements TransactionMonitoring
     private $newRelic;
 
     /**
-     * @param NewRelic $newRelic
+     * @var TransactionNameMapper
      */
-    public function __construct(NewRelic $newRelic)
+    private $transactionNameMapper;
+
+    /**
+     * @param NewRelic $newRelic
+     * @param TransactionNameMapper $transactionNameMapper
+     */
+    public function __construct(NewRelic $newRelic, TransactionNameMapper $transactionNameMapper)
     {
         $this->newRelic = $newRelic;
+        $this->transactionNameMapper = $transactionNameMapper;
     }
 
     public function nameTransaction(string $transactionName)

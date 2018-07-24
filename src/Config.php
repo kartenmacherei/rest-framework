@@ -5,7 +5,6 @@ namespace Kartenmacherei\RestFramework;
 
 class Config
 {
-    const FALLBACK_TRANSACTION_NAME = 'transaction_name_was_not_set';
     const DISABLE_MONITORING = false;
     const ENABLE_MONITORING = true;
 
@@ -52,16 +51,8 @@ class Config
         return $this->isTransactionMonitoringEnabled;
     }
 
-    /**
-     * @param string $className
-     * @return string
-     */
-    public function getTransactionName(string $className): string
+    public function getTransactionMapping(): array
     {
-        if (!array_key_exists($className, $this->transactionNamesMapping)) {
-            return self::FALLBACK_TRANSACTION_NAME;
-        }
-
-        return $this->transactionNamesMapping[$className];
+        return $this->transactionNamesMapping;
     }
 }
