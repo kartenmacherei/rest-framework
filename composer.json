@@ -30,6 +30,16 @@
 		}
 	},
 	"require": {
-		"php" : ">=7.0.0"
+		"php" : ">=7.0.0",
+		"kartenmacherei/kam-newrelic": "dev-master"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@bitbucket.org:kartenmacherei/kam-newrelic.git"
+		}
+	],
+	"require-dev": {
+		"phpunit/phpunit": "6.0"
 	}
 }
