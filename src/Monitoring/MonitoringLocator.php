@@ -33,6 +33,6 @@ class MonitoringLocator
             return $this->factory->createConcreteTransactionMonitoring();
         }
 
-        return $this->factory->createDummyTransactionMonitoring();
+        return $this->factory->createVoidTransactionMonitoring();
     }
 }

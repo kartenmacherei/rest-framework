@@ -4,7 +4,7 @@ namespace Kartenmacherei\RestFramework;
 use Kartenmacherei\NewRelic\NewRelicFactory;
 use Kartenmacherei\RestFramework\Monitoring\MonitoringLocator;
 use Kartenmacherei\RestFramework\Monitoring\NewRelicMonitoring;
-use Kartenmacherei\RestFramework\Monitoring\DummyTransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\VoidTransactionMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
 use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Router\RouterChain;
@@ -56,9 +56,9 @@ class Factory
         return new NewRelicMonitoring($newRelicAgent);
     }
 
-    public function createDummyTransactionMonitoring(): TransactionMonitoring
+    public function createVoidTransactionMonitoring(): TransactionMonitoring
     {
-        return new DummyTransactionMonitoring();
+        return new VoidTransactionMonitoring();
     }
 
     public function createTransactionNameMapper(): TransactionNameMapper
