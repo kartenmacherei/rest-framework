@@ -49,8 +49,14 @@ The goal of this framework is to enable us to quickly bootstrap new RESTful Serv
 // create a request
 $request = Request::fromSuperGlobals();
 
+// create config object
+// 'app-name' will be used as newrelic appname, if monitoring was enabled
+// bool $enableMonitoring if true, framework will set newrelic transaction name based on mapping
+// array $transactionMapping, class name to transaction name mapping array for each action. If action was not set, fallback is transaction_name_was_not_set
+$config = new Cofing('app-name', $enableMonitoring, $transactionNamesMapping);
+
 // create a new instance of the framework
-$framework = Framework::createInstance();
+$framework = Framework::createInstance($config);
 
 // register a RestResource Router
 $framework->registerResourceRouter(new BasketResourceRouter());
