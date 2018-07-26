@@ -16,6 +16,7 @@ class ErrorHandlerTest extends TestCase
         $handler = new ErrorHandler(new ExceptionToJsonRenderer());
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('Some Error');
+        $this->expectExceptionCode(E_NOTICE);
 
         $handler->handleError(E_NOTICE, 'Some Error', 'somefile.php', 23);
     }
