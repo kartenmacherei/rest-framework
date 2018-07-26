@@ -45,7 +45,7 @@ class ErrorHandler
      */
     public function handleError($errno, $errstr, $errfile = '', $errline = 0)
     {
-        throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        throw new \ErrorException($errstr,  $errno,1, $errfile, $errline);
     }
 
     /**
