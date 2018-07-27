@@ -1,10 +1,13 @@
 # Changelog
 
+All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+
+## [3.0.0] - 2017-07-27
+
 ### Added
 
-* instantiation has been changed: Framework::createInstance(Config $config)
-
-All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+* add transaction monitoring through NewRelic
+* instantiation has been changed: `Framework::createInstance(Config $config)`
 
 ## [2.1.6] - 2017-11-30
 
@@ -50,9 +53,10 @@ Initial Release
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/kartenmacherei/rest-framework/compare/2.1.1...HEAD
+[Unreleased]: https://github.com/kartenmacherei/rest-framework/compare/3.0.0...HEAD
 [1.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/1.0.0
 [2.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.0.0
 [2.1.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.0
 [2.1.1]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.1
 [2.1.5]: https://github.com/kartenmacherei/rest-framework/releases/tag/2.1.5
+[3.0.0]: https://github.com/kartenmacherei/rest-framework/releases/tag/3.0.0
