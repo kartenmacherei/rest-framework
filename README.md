@@ -53,7 +53,7 @@ $request = Request::fromSuperGlobals();
 // 'app-name' will be used as newrelic appname, if monitoring was enabled
 // bool $enableMonitoring if true, framework will set newrelic transaction name based on mapping
 // array $transactionMapping, class name to transaction name mapping array for each action. If action was not set, fallback is transaction_name_was_not_set
-$config = new Cofing('app-name', $enableMonitoring, $transactionNamesMapping);
+$config = new Config('app-name', $enableMonitoring, $transactionNamesMapping);
 
 // create a new instance of the framework
 $framework = Framework::createInstance($config);
