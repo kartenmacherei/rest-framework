@@ -1,6 +1,9 @@
 <?php
 namespace Kartenmacherei\RestFramework;
 
+use Kartenmacherei\RestFramework\Action\Action;
+use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Request\Method\UnsupportedRequestMethodException;
 use Kartenmacherei\RestFramework\Request\Request;
 use Kartenmacherei\RestFramework\Request\UnauthorizedException;
@@ -26,22 +29,47 @@ class Framework
     private $actionMapper;
 
     /**
+     * @var TransactionMonitoring
+     */
+    private $transactionMonitoring;
+
+    /**
+     * @var TransactionNameMapper
+     */
+    private $transactionNameMapper;
+
+    /**
      * @param RouterChain $routerChain
      * @param ActionMapper $actionMapper
+     * @param TransactionMonitoring $transactionMonitoring
+     * @param TransactionNameMapper $transactionNameMapper
      */
-    public function __construct(RouterChain $routerChain, ActionMapper $actionMapper)
-    {
+    public function __construct(
+        RouterChain $routerChain,
+        ActionMapper $actionMapper,
+        TransactionMonitoring $transactionMonitoring,
+        TransactionNameMapper $transactionNameMapper
+    ) {
         $this->routerChain = $routerChain;
         $this->actionMapper = $actionMapper;
+        $this->transactionMonitoring = $transactionMonitoring;
+        $this->transactionNameMapper = $transactionNameMapper;
     }
 
     /**
+     * @param Config $config
      * @return Framework
      */
-    public static function createInstance(): Framework
+    public static function createInstance(Config $config): Framework
     {
-        $factory = new Factory();
-        return new self($factory->createRouterChain(), $factory->createActionMapper());
+        $factory = new Factory($config);
+
+        return new self(
+            $factory->createRouterChain(),
+            $factory->createActionMapper(),
+            $factory->createTransactionMonitoring(),
+            $factory->createTransactionNameMapper()
+        );
     }
 
     /**
@@ -64,7 +92,11 @@ class Framework
             if ($request->isOptionsRequest()) {
                 return new OptionsResponse($resource->getSupportedMethods());
             }
-            return $this->actionMapper->getAction($request, $resource)->execute();
+
+            $action = $this->actionMapper->getAction($request, $resource);
+            $this->setTransactionName($action);
+
+            return $action->execute();
         } catch (NoMoreRoutersException $e) {
             return new NotFoundResponse();
         } catch (UnauthorizedException $e) {
@@ -72,5 +104,11 @@ class Framework
         } catch (BadRequestException $e) {
             return new BadRequestResponse($e);
         }
+    }
+
+    private function setTransactionName(Action $action)
+    {
+        $transactionName = $this->transactionNameMapper->getTransactionName(get_class($action));
+        $this->transactionMonitoring->nameTransaction($transactionName);
     }
 }

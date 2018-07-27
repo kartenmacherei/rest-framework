@@ -1,9 +1,13 @@
 <?php
 namespace Kartenmacherei\RestFramework\UnitTests;
 
+use function get_class;
 use Kartenmacherei\RestFramework\Action\Action;
 use Kartenmacherei\RestFramework\ActionMapper;
+use Kartenmacherei\RestFramework\Config;
 use Kartenmacherei\RestFramework\Framework;
+use Kartenmacherei\RestFramework\Monitoring\TransactionMonitoring;
+use Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper;
 use Kartenmacherei\RestFramework\Request\Method\GetRequestMethod;
 use Kartenmacherei\RestFramework\Request\Method\PostRequestMethod;
 use Kartenmacherei\RestFramework\Request\Request;
@@ -19,103 +23,155 @@ use Kartenmacherei\RestFramework\Router\NoMoreRoutersException;
 use Kartenmacherei\RestFramework\Router\ResourceRouter;
 use Kartenmacherei\RestFramework\Router\RouterChain;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @covers \Kartenmacherei\RestFramework\Framework
  * @uses \Kartenmacherei\RestFramework\Factory
  * @uses \Kartenmacherei\RestFramework\Response\BadRequestResponse
  * @uses \Kartenmacherei\RestFramework\Response\OptionsResponse
+ * @uses \Kartenmacherei\RestFramework\Monitoring\MonitoringLocator
+ * @uses \Kartenmacherei\RestFramework\Monitoring\TransactionNameMapper
  */
 class FrameworkTest extends TestCase
 {
+    /**
+     * @var Framework
+     */
+    private $framework;
+
+    /**
+     * @var RouterChain|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $routerChainMock;
+
+    /**
+     * @var ActionMapper|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $actionMapperMock;
+
+    /**
+     * @var TransactionMonitoring|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $transactionMonitoring;
+
+    /**
+     * @var TransactionNameMapper|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $transactionNameMapperMock;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->routerChainMock = $this->getRouterChainMock();
+        $this->actionMapperMock = $this->getActionMapperMock();
+        $this->transactionMonitoring = $this->getTransactionMonitoringMock();
+        $this->transactionNameMapperMock = $this->getTransactionNameMapperMock();
+
+        $this->framework = new Framework(
+            $this->routerChainMock,
+            $this->actionMapperMock,
+            $this->transactionMonitoring,
+            $this->transactionNameMapperMock
+        );
+    }
+
     public function testCreateInstanceReturnsExpectedObject()
     {
-        $this->assertInstanceOf(Framework::class, Framework::createInstance());
+        $this->assertInstanceOf(Framework::class, Framework::createInstance($this->getConfigMock()));
     }
 
     public function testReturnsNotFoundResponseWhenNoMoreRoutersExceptionIsThrown()
     {
-        $routerChain = $this->getRouterChainMock();
-        $routerChain->method('route')->willThrowException(new NoMoreRoutersException());
-        $framework = new Framework($routerChain, $this->getActionMapperMock());
+        $this->routerChainMock->method('route')->willThrowException(new NoMoreRoutersException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
-        $this->assertInstanceOf(NotFoundResponse::class, $framework->run($this->getRequestMock()));
+        $this->assertInstanceOf(NotFoundResponse::class, $this->framework->run($this->getRequestMock()));
     }
 
     public function testReturnsUnauthorizedResponseWhenUnauthorizedExceptionIsThrown()
     {
-        $routerChain = $this->getRouterChainMock();
-        $routerChain->method('route')->willThrowException(new UnauthorizedException());
-        $framework = new Framework($routerChain, $this->getActionMapperMock());
+        $this->routerChainMock->method('route')->willThrowException(new UnauthorizedException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
-        $this->assertInstanceOf(UnauthorizedResponse::class, $framework->run($this->getRequestMock()));
+        $this->assertInstanceOf(UnauthorizedResponse::class, $this->framework->run($this->getRequestMock()));
     }
 
     public function testReturnsBadRequestResponseIfBadRequestExceptionIsThrown()
     {
-        $routerChain = $this->getRouterChainMock();
         $resource = $this->getRestResourceMock();
-        $actionMapper = $this->getActionMapperMock();
 
-        $routerChain->method('route')->willReturn($resource);
-        $actionMapper->method('getAction')->willThrowException(new BadRequestException());
-        $framework = new Framework($routerChain, $actionMapper);
+        $this->routerChainMock->method('route')->willReturn($resource);
+        $this->actionMapperMock->method('getAction')->willThrowException(new BadRequestException());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
-        $this->assertInstanceOf(BadRequestResponse::class, $framework->run($this->getRequestMock()));
+        $this->assertInstanceOf(BadRequestResponse::class, $this->framework->run($this->getRequestMock()));
     }
 
     public function testRegisterResourceRouterAddsRouter()
     {
         $router = $this->getRouterMock();
 
-        $routerChain = $this->getRouterChainMock();
-        $routerChain->expects($this->once())->method('addRouter')->with($this->identicalTo($router));
+        $this->routerChainMock->expects($this->once())->method('addRouter')->with($this->identicalTo($router));
 
-        $framework = new Framework($routerChain, $this->getActionMapperMock());
-
-        $framework->registerResourceRouter($router);
+        $this->framework->registerResourceRouter($router);
     }
 
     public function testReturnsOptionsResponse()
     {
         $supportedMethods = [new GetRequestMethod(), new PostRequestMethod()];
 
-        $routerChain = $this->getRouterChainMock();
         $resource = $this->getRestResourceMock();
         $resource->method('getSupportedMethods')->willReturn($supportedMethods);
-        $routerChain->method('route')->willReturn($resource);
+        $this->routerChainMock->method('route')->willReturn($resource);
 
         $request = $this->getRequestMock();
         $request->method('isOptionsRequest')->willReturn(true);
 
-        $framework = new Framework($routerChain, $this->getActionMapperMock());
+        $this->transactionNameMapperMock->expects($this->never())
+            ->method('getTransactionName');
+        $this->transactionMonitoring->expects($this->never())
+            ->method('nameTransaction');
 
         $expectedResponse = new OptionsResponse($supportedMethods);
-        $this->assertEquals($expectedResponse, $framework->run($request));
+        $this->assertEquals($expectedResponse, $this->framework->run($request));
     }
 
     public function testReturnsExpectedResponseFromAction()
     {
-        $routerChain = $this->getRouterChainMock();
+        $mappedTransactionName = 'mapped-transaction-name';
         $resource = $this->getRestResourceMock();
         $response = $this->getResponseMock();
 
         $action = $this->getActionMock();
         $action->method('execute')->willReturn($response);
 
-        $actionMapper = $this->getActionMapperMock();
-        $actionMapper->method('getAction')->willReturn($action);
+        $this->routerChainMock->method('route')->willReturn($resource);
+        $this->actionMapperMock->method('getAction')->willReturn($action);
 
-        $routerChain->method('route')->willReturn($resource);
-        $actionMapper->method('getAction')->willReturn($action);
+        $this->transactionNameMapperMock->expects($this->once())
+            ->method('getTransactionName')
+            ->with(get_class($action))
+            ->willReturn($mappedTransactionName);
+        $this->transactionMonitoring->expects($this->once())
+            ->method('nameTransaction')
+            ->with($mappedTransactionName);
 
-        $framework = new Framework($routerChain, $actionMapper);
-
-        $this->assertSame($response, $framework->run($this->getRequestMock()));
+        $this->assertSame($response, $this->framework->run($this->getRequestMock()));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Action
+     * @return PHPUnit_Framework_MockObject_MockObject|Action
      */
     private function getActionMock()
     {
@@ -123,7 +179,7 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RestResource
+     * @return PHPUnit_Framework_MockObject_MockObject|RestResource
      */
     private function getRestResourceMock()
     {
@@ -131,7 +187,7 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResourceRouter
+     * @return PHPUnit_Framework_MockObject_MockObject|ResourceRouter
      */
     private function getRouterMock()
     {
@@ -139,7 +195,7 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Resource
+     * @return PHPUnit_Framework_MockObject_MockObject|Resource
      */
     private function getResponseMock()
     {
@@ -147,7 +203,7 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RouterChain
+     * @return PHPUnit_Framework_MockObject_MockObject|RouterChain
      */
     private function getRouterChainMock()
     {
@@ -155,7 +211,7 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Request
+     * @return PHPUnit_Framework_MockObject_MockObject|Request
      */
     private function getRequestMock()
     {
@@ -163,10 +219,34 @@ class FrameworkTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ActionMapper
+     * @return PHPUnit_Framework_MockObject_MockObject|ActionMapper
      */
     private function getActionMapperMock()
     {
         return $this->createMock(ActionMapper::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|Config
+     */
+    private function getConfigMock()
+    {
+        return $this->createMock(Config::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|TransactionMonitoring
+     */
+    private function getTransactionMonitoringMock()
+    {
+        return $this->createMock(TransactionMonitoring::class);
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|TransactionNameMapper
+     */
+    private function getTransactionNameMapperMock()
+    {
+        return $this->createMock(TransactionNameMapper::class);
     }
 }

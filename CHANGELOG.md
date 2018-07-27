@@ -1,5 +1,9 @@
 # Changelog
 
+### Added
+
+* instantiation has been changed: Framework::createInstance(Config $config)
+
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [2.1.6] - 2017-11-30
