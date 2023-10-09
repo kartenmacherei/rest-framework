@@ -16,7 +16,7 @@ class JsonArray implements \Iterator
         $this->data = $data;
     }
 
-    public function current()
+    public function current(): mixed
     {
         $current = current($this->data);
         if (is_array($current)) {
@@ -28,12 +28,12 @@ class JsonArray implements \Iterator
         return $current;
     }
 
-    public function next()
+    public function next(): void
     {
         next($this->data);
     }
 
-    public function key()
+    public function key(): mixed
     {
         return key($this->data);
     }
@@ -46,7 +46,7 @@ class JsonArray implements \Iterator
         return array_key_exists($this->key(), $this->data);
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->data);
     }
