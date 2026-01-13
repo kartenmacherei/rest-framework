@@ -13,7 +13,7 @@ abstract class AbstractResourceRouter implements ResourceRouter
     private $next;
 
     /**
-     * @var Acl
+     * @var Acl|null
      */
     private $acl;
 
@@ -23,9 +23,9 @@ abstract class AbstractResourceRouter implements ResourceRouter
     private $resources = [];
 
     /**
-     * @param Acl $acl
+     * @param Acl|null $acl
      */
-    public function __construct(Acl $acl = null)
+    public function __construct(?Acl $acl = null)
     {
         $this->acl = $acl;
     }
