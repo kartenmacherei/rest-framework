@@ -53,8 +53,10 @@ class ErrorHandler
      */
     public function handleException(Throwable $throwable)
     {
-        http_response_code(500);
-        header('Content-Type: application/json');
+        if (!headers_sent()) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+        }
         print($this->exceptionRenderer->render($throwable));
     }
 }
