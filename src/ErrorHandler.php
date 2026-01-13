@@ -23,9 +23,9 @@ class ErrorHandler
     /**
      * @codeCoverageIgnore
      *
-     * @param ExceptionRenderer $exceptionRenderer
+     * @param ExceptionRenderer|null $exceptionRenderer
      */
-    public static function register(ExceptionRenderer $exceptionRenderer = null)
+    public static function register(?ExceptionRenderer $exceptionRenderer = null)
     {
         if (is_null($exceptionRenderer)) {
             $exceptionRenderer =  new ExceptionToJsonRenderer();
